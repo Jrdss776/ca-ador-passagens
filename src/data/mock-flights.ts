@@ -1,0 +1,76 @@
+import type { FlightOffer } from '@/types/flight';
+
+type MockFlightTemplate = Omit<FlightOffer, 'origin' | 'destination'>;
+
+export const mockFlightTemplates: MockFlightTemplate[] = [
+  {
+    id: 'mock-001',
+    airline: 'Azul',
+    airlineCode: 'AD',
+    outbound: {
+      departureTime: '06:10',
+      arrivalTime: '08:25',
+      duration: '2h 15min',
+    },
+    stops: 0,
+    price: 589,
+    currency: 'BRL',
+    score: 94,
+  },
+  {
+    id: 'mock-002',
+    airline: 'LATAM',
+    airlineCode: 'LA',
+    outbound: {
+      departureTime: '09:40',
+      arrivalTime: '12:20',
+      duration: '2h 40min',
+    },
+    stops: 0,
+    price: 649,
+    currency: 'BRL',
+    score: 91,
+  },
+  {
+    id: 'mock-003',
+    airline: 'GOL',
+    airlineCode: 'G3',
+    outbound: {
+      departureTime: '13:15',
+      arrivalTime: '17:35',
+      duration: '4h 20min',
+    },
+    stops: 1,
+    price: 478,
+    currency: 'BRL',
+    score: 86,
+  },
+  {
+    id: 'mock-004',
+    airline: 'Azul',
+    airlineCode: 'AD',
+    outbound: {
+      departureTime: '18:30',
+      arrivalTime: '23:20',
+      duration: '4h 50min',
+    },
+    stops: 1,
+    price: 529,
+    currency: 'BRL',
+    score: 82,
+  },
+  {
+    id: 'mock-005',
+    airline: 'LATAM',
+    airlineCode: 'LA',
+    outbound: {
+      departureTime: '21:05',
+      arrivalTime: '23:15',
+      duration: '2h 10min',
+    },
+    stops: 0,
+    price: 715,
+    currency: 'BRL',
+    score: 88,
+  },
+];
