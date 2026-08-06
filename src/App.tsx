@@ -9,6 +9,7 @@ import {
 import { useState } from 'react';
 
 import { AppShell } from '@/components/layout/app-shell';
+import { IntegrationsPanel } from '@/components/integrations/integrations-panel';
 import { LocalDashboard } from '@/components/local/local-dashboard';
 import { FlightResults } from '@/components/results/flight-results';
 import { FlightSearchForm } from '@/components/search/flight-search-form';
@@ -182,6 +183,8 @@ export default function App() {
         onUpdateSettings={setSettings}
       />
 
+      <IntegrationsPanel />
+
       <section
         id="recursos"
         className="scroll-mt-24 py-8"
@@ -242,9 +245,9 @@ export default function App() {
               Uma interface pronta para evoluir
             </h2>
             <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">
-              O motor de comparação utiliza dados simulados nesta etapa.
-              Integrações externas e recursos pessoais serão adicionados somente
-              nas próximas sprints.
+              O motor de comparação continua usando dados simulados. A estrutura
+              de integrações já está preparada, mas só poderá ser ativada por
+              uma futura camada de backend segura.
             </p>
           </div>
           <div

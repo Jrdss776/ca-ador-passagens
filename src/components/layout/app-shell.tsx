@@ -55,6 +55,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                 Minha área
               </a>
               <a
+                href="#integracoes"
+                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                Integrações
+              </a>
+              <a
                 href="#sobre"
                 className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
@@ -93,6 +99,13 @@ export function AppShell({ children }: { children: ReactNode }) {
                   onClick={closeMobileMenu}
                 >
                   Minha área
+                </a>
+                <a
+                  href="#integracoes"
+                  className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
+                  onClick={closeMobileMenu}
+                >
+                  Integrações
                 </a>
                 <a
                   href="#sobre"
