@@ -5,7 +5,7 @@ export const integrations: IntegrationDefinition[] = [
     id: 'amadeus',
     name: 'Amadeus Self-Service',
     description:
-      'Ofertas e disponibilidade de voos para uma futura busca real.',
+      'Fonte opcional de ofertas reais; o app funciona sem cadastro corporativo usando estimativas.',
     capability: 'flights',
     auth: 'server-secret',
     environmentVariables: ['AMADEUS_API_KEY', 'AMADEUS_API_SECRET'],

@@ -5,12 +5,23 @@ A Sprint 13 prepara o mini app para uma hospedagem Node.js ou para um serviço c
 ## Antes de publicar
 
 1. Execute `npm ci`, `npm test` e `npm run build`.
-2. Cadastre `AMADEUS_API_KEY` e `AMADEUS_API_SECRET` como segredos do serviço, nunca como variáveis `VITE_`.
-3. Configure `AMADEUS_API_BASE_URL` para o ambiente autorizado pelo provedor.
-4. Defina `API_HOST=0.0.0.0` e use a variável `PORT` fornecida pela hospedagem.
-5. Configure HTTPS no proxy ou na plataforma e acompanhe `GET /api/health`.
+2. Conecte o repositório ao Render usando o arquivo `render.yaml`.
+3. Mantenha `API_HOST=0.0.0.0` e use a variável `PORT` fornecida pela hospedagem.
+4. Acompanhe `GET /api/health` depois da publicação.
+
+As credenciais Amadeus são opcionais. Caso sejam obtidas futuramente, cadastre `AMADEUS_API_KEY`, `AMADEUS_API_SECRET` e `AMADEUS_API_BASE_URL` como segredos do serviço, nunca como variáveis `VITE_`.
 
 Sem credenciais Amadeus, a aplicação continua operacional em modo demonstrativo e mostra um aviso antes das estimativas.
+
+## Publicação simplificada no Render
+
+1. Acesse o painel do Render e escolha **New → Blueprint**.
+2. Conecte o repositório `Jrdss776/ca-ador-passagens`.
+3. Selecione a branch principal e confirme o Blueprint encontrado.
+4. Aguarde as verificações do GitHub e a construção da imagem.
+5. Abra o endereço `onrender.com` criado pelo serviço.
+
+O arquivo `render.yaml` usa o plano gratuito, Docker, verificação em `/api/health` e publicação somente depois que as verificações automatizadas forem aprovadas. O plano gratuito pode entrar em suspensão após períodos sem acesso.
 
 ## Execução Node.js
 

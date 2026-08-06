@@ -44,8 +44,9 @@ export function IntegrationsPanel() {
             Integrações públicas em funcionamento
           </h2>
           <p className="mt-3 leading-7 text-muted-foreground">
-            Open-Meteo e Frankfurter enriquecem os resultados sem credenciais. O
-            backend Amadeus está pronto para ativação segura e possui fallback.
+            Open-Meteo e Frankfurter enriquecem os resultados sem credenciais. A
+            fonte de ofertas reais é opcional e o modo demonstrativo permanece
+            disponível.
           </p>
         </div>
         <div className="inline-flex w-fit items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-sm font-medium text-muted-foreground">
@@ -92,7 +93,7 @@ export function IntegrationsPanel() {
                     {integration.active
                       ? 'Ativa'
                       : integration.id === 'amadeus'
-                        ? 'Backend pronto'
+                        ? 'Fonte opcional'
                         : 'Estrutura pronta'}
                   </span>
                 </div>

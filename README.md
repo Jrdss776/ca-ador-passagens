@@ -73,6 +73,8 @@ Consulte também [a política de links de fornecedores](docs/supplier-links.md) 
 
 Para executar em um serviço Node.js ou contêiner, consulte o [guia de publicação](docs/deployment.md).
 
+[Publicar no Render](https://dashboard.render.com/select-repo?type=blueprint) usando o `render.yaml` incluído no repositório. A Amadeus é opcional: sem essas credenciais, o mini app publica normalmente em modo demonstrativo.
+
 ## Escopo concluído
 
 - base React + Vite + TypeScript;
@@ -119,6 +121,7 @@ Para executar em um serviço Node.js ou contêiner, consulte o [guia de publica�
 - servidor único para interface e API, com arquivos estáticos preparados para cache;
 - cabeçalhos de segurança, limitação de requisições e endpoint de saúde;
 - encerramento controlado, contêiner sem privilégios e guia de publicação.
+- Blueprint do Render e validação automática no GitHub antes de cada publicação.
 
 ## Próxima etapa
 
