@@ -35,7 +35,7 @@ export function IntegrationsPanel() {
       <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
         <div className="max-w-3xl">
           <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-            Sprint 12
+            Sprint 13
           </span>
           <h2
             id="integrations-title"
@@ -44,8 +44,9 @@ export function IntegrationsPanel() {
             Integrações públicas em funcionamento
           </h2>
           <p className="mt-3 leading-7 text-muted-foreground">
-            Open-Meteo e Frankfurter enriquecem os resultados sem credenciais. O
-            backend Amadeus está pronto para ativação segura e possui fallback.
+            Open-Meteo e Frankfurter enriquecem os resultados sem credenciais. A
+            fonte de ofertas reais é opcional e o modo demonstrativo permanece
+            disponível.
           </p>
         </div>
         <div className="inline-flex w-fit items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-sm font-medium text-muted-foreground">
@@ -92,7 +93,7 @@ export function IntegrationsPanel() {
                     {integration.active
                       ? 'Ativa'
                       : integration.id === 'amadeus'
-                        ? 'Backend pronto'
+                        ? 'Fonte opcional'
                         : 'Estrutura pronta'}
                   </span>
                 </div>

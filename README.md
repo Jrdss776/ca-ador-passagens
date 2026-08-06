@@ -1,6 +1,6 @@
 # Caçador de Passagens
 
-Mini app para planejamento e comparação de passagens. As Sprints 1 a 12 estão concluídas: base técnica, interface responsiva, recursos pessoais, integrações públicas, fornecedores, backend seguro, aeroportos assistidos, validação, detalhes de tarifa e uma camada inicial de qualidade automatizada. Sem credenciais Amadeus, as ofertas continuam simuladas; clima e câmbio são consultados em APIs públicas.
+Mini app para planejamento e comparação de passagens. As Sprints 1 a 13 estão concluídas: base técnica, interface responsiva, recursos pessoais, integrações públicas, fornecedores, backend seguro, aeroportos assistidos, validação, detalhes de tarifa, qualidade automatizada e preparação para produção. Sem credenciais Amadeus, as ofertas continuam simuladas; clima e câmbio são consultados em APIs públicas.
 
 ## Tecnologias
 
@@ -38,6 +38,7 @@ Para testar a ponte de voos em outro terminal, execute `npm run dev:api`. Sem `A
 | ---------------------- | ------------------------------------------- |
 | `npm run dev`          | inicia o ambiente local                     |
 | `npm run dev:api`      | inicia o backend de voos em desenvolvimento |
+| `npm start`            | serve o build e a API em produção           |
 | `npm run start:api`    | inicia o backend de voos sem observação     |
 | `npm test`             | executa os testes automatizados             |
 | `npm run build`        | valida tipos e gera a versão de produção    |
@@ -69,6 +70,10 @@ Copie `.env.example` para `.env`. Somente `VITE_APP_NAME` pode ser lida pelo fro
 Consulte [a documentação de integrações](docs/integrations.md) para a fronteira de segurança e os passos de ativação futura.
 
 Consulte também [a política de links de fornecedores](docs/supplier-links.md) para entender a diferença entre estimativa, consulta oficial e compra.
+
+Para executar em um serviço Node.js ou contêiner, consulte o [guia de publicação](docs/deployment.md).
+
+[Publicar no Render](https://dashboard.render.com/select-repo?type=blueprint) usando o `render.yaml` incluído no repositório. A Amadeus é opcional: sem essas credenciais, o mini app publica normalmente em modo demonstrativo.
 
 ## Escopo concluído
 
@@ -113,7 +118,11 @@ Consulte também [a política de links de fornecedores](docs/supplier-links.md) 
 - testes automatizados para resolução de aeroportos e regras críticas da pesquisa;
 - aviso acessível quando a busca utiliza estimativas por indisponibilidade do provedor;
 - estado de erro seguro, indicador de carregamento e anúncios para leitores de tela.
+- servidor único para interface e API, com arquivos estáticos preparados para cache;
+- cabeçalhos de segurança, limitação de requisições e endpoint de saúde;
+- encerramento controlado, contêiner sem privilégios e guia de publicação.
+- Blueprint do Render e validação automática no GitHub antes de cada publicação.
 
 ## Próxima etapa
 
-O próximo ciclo será dedicado à preparação de produção, segurança operacional e publicação. O aplicativo apenas direciona aos canais oficiais: nenhuma compra, reserva ou notificação externa foi adicionada.
+O ciclo planejado está concluído. O próximo passo operacional é escolher a hospedagem, cadastrar as credenciais Amadeus como segredos e publicar a imagem ou o processo Node.js. O aplicativo apenas direciona aos canais oficiais: nenhuma compra, reserva ou notificação externa foi adicionada.

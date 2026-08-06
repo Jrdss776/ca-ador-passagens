@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: cacador-passagens
+    runtime: docker
+    plan: free
+    region: ohio
+    autoDeployTrigger: checksPass
+    healthCheckPath: /api/health
+    maxShutdownDelaySeconds: 15
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: API_HOST
+        value: 0.0.0.0
