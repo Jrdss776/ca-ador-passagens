@@ -127,3 +127,27 @@ export async function searchAmadeusFlights(params, config) {
     .map((offer, index) => mapOffer(offer, payload.dictionaries, index))
     .filter(Boolean);
 }
+
+export async function searchAmadeusLocations(keyword, config) {
+  const token = await getAccessToken(config);
+  const query = new URLSearchParams({
+    subType: 'CITY,AIRPORT',
+    keyword: keyword.slice(0, 10),
+    view: 'LIGHT',
+    'page[limit]': '8',
+  });
+  const response = await fetchWithTimeout(
+    `${config.baseUrl}/v1/reference-data/locations?${query}`,
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+  if (!response.ok)
+    throw new Error(`Falha na busca de aeroportos (${response.status}).`);
+
+  const payload = await response.json();
+  return payload.data.map((location) => ({
+    code: location.iataCode,
+    city: location.address?.cityName ?? location.name,
+    name: location.name,
+    country: location.address?.countryName ?? '',
+  }));
+}

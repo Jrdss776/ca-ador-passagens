@@ -2,11 +2,11 @@ import {
   ArrowRightLeft,
   CalendarDays,
   LoaderCircle,
-  MapPin,
   Search,
 } from 'lucide-react';
-import { useRef, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 
+import { AirportField } from '@/components/search/airport-field';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -21,14 +21,12 @@ interface FlightSearchFormProps {
 const today = new Date().toISOString().split('T')[0];
 
 export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
-  const originRef = useRef<HTMLInputElement>(null);
-  const destinationRef = useRef<HTMLInputElement>(null);
+  const [origin, setOrigin] = useState('');
+  const [destination, setDestination] = useState('');
 
   function handleSwap() {
-    if (!originRef.current || !destinationRef.current) return;
-    const origin = originRef.current.value;
-    originRef.current.value = destinationRef.current.value;
-    destinationRef.current.value = origin;
+    setOrigin(destination);
+    setDestination(origin);
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -69,21 +67,14 @@ export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
             disabled={loading}
           >
             <legend className="sr-only">Trecho da viagem</legend>
-            <div className="grid gap-2">
-              <Label htmlFor="origin">Origem</Label>
-              <div className="relative">
-                <MapPin className="pointer-events-none absolute left-3 top-3.5 size-4 text-muted-foreground" />
-                <Input
-                  ref={originRef}
-                  id="origin"
-                  name="origin"
-                  placeholder="Ex.: São Paulo"
-                  className="pl-10"
-                  autoComplete="off"
-                  required
-                />
-              </div>
-            </div>
+            <AirportField
+              id="origin"
+              name="origin"
+              label="Origem"
+              placeholder="Ex.: São Paulo ou SAO"
+              value={origin}
+              onChange={setOrigin}
+            />
 
             <Button
               type="button"
@@ -96,21 +87,14 @@ export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
               <ArrowRightLeft className="size-4" />
             </Button>
 
-            <div className="grid gap-2">
-              <Label htmlFor="destination">Destino</Label>
-              <div className="relative">
-                <MapPin className="pointer-events-none absolute left-3 top-3.5 size-4 text-muted-foreground" />
-                <Input
-                  ref={destinationRef}
-                  id="destination"
-                  name="destination"
-                  placeholder="Ex.: Recife"
-                  className="pl-10"
-                  autoComplete="off"
-                  required
-                />
-              </div>
-            </div>
+            <AirportField
+              id="destination"
+              name="destination"
+              label="Destino"
+              placeholder="Ex.: Recife ou REC"
+              value={destination}
+              onChange={setDestination}
+            />
           </fieldset>
 
           <fieldset
