@@ -18,6 +18,7 @@ export interface IntegrationDefinition {
   auth: IntegrationAuth;
   environmentVariables: string[];
   serverOnly: boolean;
+  active: boolean;
 }
 
 export interface ExternalIntegration<TInput, TOutput> {

@@ -245,8 +245,8 @@ export default function App() {
               Uma interface pronta para evoluir
             </h2>
             <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">
-              O motor de comparação continua usando dados simulados. A estrutura
-              de integrações já está preparada, mas só poderá ser ativada por
+              O motor de comparação continua usando dados simulados. Clima e
+              câmbio já usam APIs públicas; dados reais de voos dependerão de
               uma futura camada de backend segura.
             </p>
           </div>

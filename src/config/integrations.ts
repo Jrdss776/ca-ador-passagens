@@ -10,6 +10,7 @@ export const integrations: IntegrationDefinition[] = [
     auth: 'server-secret',
     environmentVariables: ['AMADEUS_API_KEY', 'AMADEUS_API_SECRET'],
     serverOnly: true,
+    active: false,
   },
   {
     id: 'opensky',
@@ -20,6 +21,7 @@ export const integrations: IntegrationDefinition[] = [
     auth: 'optional-account',
     environmentVariables: ['OPENSKY_USERNAME', 'OPENSKY_PASSWORD'],
     serverOnly: true,
+    active: false,
   },
   {
     id: 'open-meteo',
@@ -29,6 +31,7 @@ export const integrations: IntegrationDefinition[] = [
     auth: 'public',
     environmentVariables: [],
     serverOnly: false,
+    active: true,
   },
   {
     id: 'frankfurter',
@@ -38,5 +41,6 @@ export const integrations: IntegrationDefinition[] = [
     auth: 'public',
     environmentVariables: [],
     serverOnly: false,
+    active: true,
   },
 ];
