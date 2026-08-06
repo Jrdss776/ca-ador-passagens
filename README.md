@@ -1,6 +1,6 @@
 # Caçador de Passagens
 
-Mini app para planejamento e comparação de passagens. As Sprints 1 a 7 estão concluídas: base técnica, interface responsiva, motor demonstrativo, recursos pessoais locais, integrações públicas e direcionamento seguro aos fornecedores. As ofertas de voo continuam simuladas; clima e câmbio são consultados em APIs públicas.
+Mini app para planejamento e comparação de passagens. As Sprints 1 a 8 estão concluídas: base técnica, interface responsiva, recursos pessoais, integrações públicas, direcionamento aos fornecedores e backend seguro para busca de voos. Sem credenciais Amadeus, as ofertas continuam simuladas; clima e câmbio são consultados em APIs públicas.
 
 ## Tecnologias
 
@@ -30,17 +30,21 @@ npm run dev
 
 O servidor local usa `http://localhost:5173` por padrão. Em macOS ou Linux, substitua o segundo comando por `cp .env.example .env`.
 
+Para testar a ponte de voos em outro terminal, execute `npm run dev:api`. Sem `AMADEUS_API_KEY` e `AMADEUS_API_SECRET`, essa API informa que o provedor não está configurado e o frontend retorna automaticamente às estimativas.
+
 ## Comandos disponíveis
 
-| Comando                | Finalidade                                 |
-| ---------------------- | ------------------------------------------ |
-| `npm run dev`          | inicia o ambiente local                    |
-| `npm run build`        | valida tipos e gera a versão de produção   |
-| `npm run preview`      | abre localmente o build gerado             |
-| `npm run lint`         | executa as regras de qualidade             |
-| `npm run format`       | formata o código                           |
-| `npm run format:check` | verifica a formatação sem alterar arquivos |
-| `npm run typecheck`    | valida os tipos TypeScript                 |
+| Comando                | Finalidade                                  |
+| ---------------------- | ------------------------------------------- |
+| `npm run dev`          | inicia o ambiente local                     |
+| `npm run dev:api`      | inicia o backend de voos em desenvolvimento |
+| `npm run start:api`    | inicia o backend de voos sem observação     |
+| `npm run build`        | valida tipos e gera a versão de produção    |
+| `npm run preview`      | abre localmente o build gerado              |
+| `npm run lint`         | executa as regras de qualidade              |
+| `npm run format`       | formata o código                            |
+| `npm run format:check` | verifica a formatação sem alterar arquivos  |
+| `npm run typecheck`    | valida os tipos TypeScript                  |
 
 ## Estrutura
 
@@ -93,7 +97,10 @@ Consulte também [a política de links de fornecedores](docs/supplier-links.md) 
 - valores demonstrativos identificados como estimativas, com data e hora da simulação;
 - acesso ao site e aos canais oficiais de atendimento de Azul, LATAM e GOL;
 - aviso para confirmar preço, disponibilidade, bagagem e condições antes da compra.
+- backend local sem dependências adicionais e com credenciais apenas no servidor;
+- autenticação OAuth, cache temporário do token e consulta Flight Offers Search;
+- fallback automático para estimativas quando a API não estiver configurada ou disponível.
 
 ## Próxima etapa
 
-O próximo ciclo poderá implementar uma camada de backend para substituir as estimativas por ofertas consultadas em um provedor de voos. O aplicativo apenas direciona aos canais oficiais: nenhuma compra, reserva ou notificação externa foi adicionada.
+O próximo ciclo poderá adicionar seleção assistida de aeroportos e ampliar a identificação de companhias. O aplicativo apenas direciona aos canais oficiais: nenhuma compra, reserva ou notificação externa foi adicionada.
