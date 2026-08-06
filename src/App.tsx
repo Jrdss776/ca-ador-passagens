@@ -15,7 +15,7 @@ import { FlightResults } from '@/components/results/flight-results';
 import { FlightSearchForm } from '@/components/search/flight-search-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useLocalStorage } from '@/hooks/use-local-storage';
-import { mockFlightProvider } from '@/services/mock-flight-provider';
+import { resilientFlightProvider } from '@/services/resilient-flight-provider';
 import type { FlightOffer, FlightSearchParams } from '@/types/flight';
 import type {
   LocalSettings,
@@ -73,7 +73,7 @@ export default function App() {
 
   async function handleSearch(params: FlightSearchParams) {
     setLoading(true);
-    const results = await mockFlightProvider.search(params);
+    const results = await resilientFlightProvider.search(params);
     setOffers(results);
     setLastSearch(params);
     setHistory((current) =>

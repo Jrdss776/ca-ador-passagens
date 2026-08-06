@@ -53,7 +53,9 @@ export function FlightOfferCard({
             <div>
               <p className="font-semibold">{offer.airline}</p>
               <p className="text-xs text-muted-foreground">
-                Oferta demonstrativa
+                {offer.priceKind === 'live'
+                  ? 'Oferta consultada'
+                  : 'Oferta demonstrativa'}
               </p>
             </div>
           </div>
@@ -122,12 +124,15 @@ export function FlightOfferCard({
         <div className="flex flex-col gap-4 border-t bg-muted/30 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <div className="max-w-2xl text-xs leading-5 text-muted-foreground">
             <p className="inline-flex items-center gap-1.5 font-semibold text-foreground">
-              <Info className="size-3.5 text-primary" /> Estimativa
-              demonstrativa
+              <Info className="size-3.5 text-primary" />{' '}
+              {offer.priceKind === 'live'
+                ? 'Preço consultado no provedor'
+                : 'Estimativa demonstrativa'}
             </p>
             <p>
-              Simulada em {checkedAt}. {offer.fareNote} Confirme preço,
-              disponibilidade e condições no site oficial antes de comprar.
+              {offer.priceKind === 'live' ? 'Consultado' : 'Simulada'} em{' '}
+              {checkedAt}. {offer.fareNote} Confirme preço, disponibilidade e
+              condições no site oficial antes de comprar.
             </p>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row">

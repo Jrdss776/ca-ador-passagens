@@ -36,6 +36,7 @@ export function FlightResults({
   const [sort, setSort] = useState<FlightSort>('recommended');
   const [stops, setStops] = useState<'all' | 'direct' | 'one'>('all');
   const [airline, setAirline] = useState('all');
+  const hasLiveOffers = offers.some((offer) => offer.priceKind === 'live');
 
   const airlines = useMemo(
     () => [...new Set(offers.map((offer) => offer.airline))],
@@ -75,7 +76,7 @@ export function FlightResults({
       <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
         <div>
           <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-            Modo demonstração
+            {hasLiveOffers ? 'Consulta de mercado' : 'Modo demonstração'}
           </span>
           <h2
             id="results-title"
@@ -84,7 +85,10 @@ export function FlightResults({
             Opções para {search.destination}
           </h2>
           <p className="mt-2 text-muted-foreground">
-            {visibleOffers.length} de {offers.length} estimativas demonstrativas
+            {visibleOffers.length} de {offers.length}{' '}
+            {hasLiveOffers
+              ? 'ofertas consultadas'
+              : 'estimativas demonstrativas'}{' '}
             para comparar
           </p>
         </div>
