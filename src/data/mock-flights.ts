@@ -1,6 +1,9 @@
 import type { FlightOffer } from '@/types/flight';
 
-type MockFlightTemplate = Omit<FlightOffer, 'origin' | 'destination'>;
+type MockFlightTemplate = Omit<
+  FlightOffer,
+  'origin' | 'destination' | 'checkedAt'
+>;
 
 export const mockFlightTemplates: MockFlightTemplate[] = [
   {
@@ -16,6 +19,12 @@ export const mockFlightTemplates: MockFlightTemplate[] = [
     price: 589,
     currency: 'BRL',
     score: 94,
+    priceKind: 'estimate',
+    fareNote: 'Bagagem despachada não incluída na estimativa.',
+    supplier: {
+      websiteUrl: 'https://www.voeazul.com.br/home/br/pt/home',
+      supportUrl: 'https://www.voeazul.com.br/home/br/pt/home',
+    },
   },
   {
     id: 'mock-002',
@@ -30,6 +39,12 @@ export const mockFlightTemplates: MockFlightTemplate[] = [
     price: 649,
     currency: 'BRL',
     score: 91,
+    priceKind: 'estimate',
+    fareNote: 'Bagagem despachada não incluída na estimativa.',
+    supplier: {
+      websiteUrl: 'https://www.latamairlines.com/br/pt',
+      supportUrl: 'https://www.latamairlines.com/br/pt/central-ajuda',
+    },
   },
   {
     id: 'mock-003',
@@ -44,6 +59,12 @@ export const mockFlightTemplates: MockFlightTemplate[] = [
     price: 478,
     currency: 'BRL',
     score: 86,
+    priceKind: 'estimate',
+    fareNote: 'Bagagem despachada não incluída na estimativa.',
+    supplier: {
+      websiteUrl: 'https://www.voegol.com.br/',
+      supportUrl: 'https://www.voegol.com.br/atendimento/canais-oficiais-gol',
+    },
   },
   {
     id: 'mock-004',
@@ -58,6 +79,12 @@ export const mockFlightTemplates: MockFlightTemplate[] = [
     price: 529,
     currency: 'BRL',
     score: 82,
+    priceKind: 'estimate',
+    fareNote: 'Bagagem despachada não incluída na estimativa.',
+    supplier: {
+      websiteUrl: 'https://www.voeazul.com.br/home/br/pt/home',
+      supportUrl: 'https://www.voeazul.com.br/home/br/pt/home',
+    },
   },
   {
     id: 'mock-005',
@@ -72,5 +99,11 @@ export const mockFlightTemplates: MockFlightTemplate[] = [
     price: 715,
     currency: 'BRL',
     score: 88,
+    priceKind: 'estimate',
+    fareNote: 'Bagagem despachada não incluída na estimativa.',
+    supplier: {
+      websiteUrl: 'https://www.latamairlines.com/br/pt',
+      supportUrl: 'https://www.latamairlines.com/br/pt/central-ajuda',
+    },
   },
 ];

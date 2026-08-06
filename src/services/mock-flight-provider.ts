@@ -12,6 +12,7 @@ export const mockFlightProvider: FlightProvider = {
 
     const origin = normalizeAirport(params.origin);
     const destination = normalizeAirport(params.destination);
+    const checkedAt = new Date().toISOString();
 
     return mockFlightTemplates.map((offer) => ({
       ...offer,
@@ -19,6 +20,7 @@ export const mockFlightProvider: FlightProvider = {
       origin,
       destination,
       price: offer.price * params.travelers,
+      checkedAt,
     }));
   },
 };

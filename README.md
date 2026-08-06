@@ -1,6 +1,6 @@
 # Caçador de Passagens
 
-Mini app para planejamento e comparação de passagens. As Sprints 1 a 6 estão concluídas: base técnica, interface responsiva, motor demonstrativo, recursos pessoais locais e integrações públicas. As ofertas de voo continuam simuladas; clima e câmbio são consultados em APIs públicas.
+Mini app para planejamento e comparação de passagens. As Sprints 1 a 7 estão concluídas: base técnica, interface responsiva, motor demonstrativo, recursos pessoais locais, integrações públicas e direcionamento seguro aos fornecedores. As ofertas de voo continuam simuladas; clima e câmbio são consultados em APIs públicas.
 
 ## Tecnologias
 
@@ -63,6 +63,8 @@ Copie `.env.example` para `.env`. Somente `VITE_APP_NAME` pode ser lida pelo fro
 
 Consulte [a documentação de integrações](docs/integrations.md) para a fronteira de segurança e os passos de ativação futura.
 
+Consulte também [a política de links de fornecedores](docs/supplier-links.md) para entender a diferença entre estimativa, consulta oficial e compra.
+
 ## Escopo concluído
 
 - base React + Vite + TypeScript;
@@ -88,7 +90,10 @@ Consulte [a documentação de integrações](docs/integrations.md) para a fronte
 - previsão diária do destino consultada na API pública Open-Meteo;
 - menor oferta convertida de BRL para USD e EUR pela API pública Frankfurter;
 - tratamento independente de falhas: clima ou câmbio indisponíveis não interrompem os resultados.
+- valores demonstrativos identificados como estimativas, com data e hora da simulação;
+- acesso ao site e aos canais oficiais de atendimento de Azul, LATAM e GOL;
+- aviso para confirmar preço, disponibilidade, bagagem e condições antes da compra.
 
 ## Próxima etapa
 
-O próximo ciclo poderá implementar uma camada de backend para ativar provedores de voos com credenciais. Nenhuma compra, reserva ou notificação externa foi adicionada nesta entrega.
+O próximo ciclo poderá implementar uma camada de backend para substituir as estimativas por ofertas consultadas em um provedor de voos. O aplicativo apenas direciona aos canais oficiais: nenhuma compra, reserva ou notificação externa foi adicionada.
