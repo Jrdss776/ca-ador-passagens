@@ -10,10 +10,14 @@ export const mockFlightProvider: FlightProvider = {
   async search(params: FlightSearchParams): Promise<FlightOffer[]> {
     await new Promise((resolve) => window.setTimeout(resolve, 650));
 
+    const origin = normalizeAirport(params.origin);
+    const destination = normalizeAirport(params.destination);
+
     return mockFlightTemplates.map((offer) => ({
       ...offer,
-      origin: normalizeAirport(params.origin),
-      destination: normalizeAirport(params.destination),
+      id: `${offer.id}-${origin}-${destination}`,
+      origin,
+      destination,
       price: offer.price * params.travelers,
     }));
   },

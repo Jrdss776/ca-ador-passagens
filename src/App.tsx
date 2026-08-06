@@ -9,11 +9,24 @@ import {
 import { useState } from 'react';
 
 import { AppShell } from '@/components/layout/app-shell';
+import { LocalDashboard } from '@/components/local/local-dashboard';
 import { FlightResults } from '@/components/results/flight-results';
 import { FlightSearchForm } from '@/components/search/flight-search-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 import { mockFlightProvider } from '@/services/mock-flight-provider';
 import type { FlightOffer, FlightSearchParams } from '@/types/flight';
+import type {
+  LocalSettings,
+  PriceAlert,
+  SearchHistoryItem,
+} from '@/types/local-features';
+
+const defaultSettings: LocalSettings = {
+  homeAirport: '',
+  directFlightsOnly: false,
+  compactResults: false,
+};
 
 const benefits = [
   {
@@ -40,12 +53,38 @@ export default function App() {
   const [offers, setOffers] = useState<FlightOffer[]>([]);
   const [lastSearch, setLastSearch] = useState<FlightSearchParams | null>(null);
   const [loading, setLoading] = useState(false);
+  const [favorites, setFavorites] = useLocalStorage<FlightOffer[]>(
+    'flight-hunter:favorites',
+    [],
+  );
+  const [history, setHistory] = useLocalStorage<SearchHistoryItem[]>(
+    'flight-hunter:history',
+    [],
+  );
+  const [alerts, setAlerts] = useLocalStorage<PriceAlert[]>(
+    'flight-hunter:alerts',
+    [],
+  );
+  const [settings, setSettings] = useLocalStorage<LocalSettings>(
+    'flight-hunter:settings',
+    defaultSettings,
+  );
 
   async function handleSearch(params: FlightSearchParams) {
     setLoading(true);
     const results = await mockFlightProvider.search(params);
     setOffers(results);
     setLastSearch(params);
+    setHistory((current) =>
+      [
+        {
+          id: crypto.randomUUID(),
+          createdAt: new Date().toISOString(),
+          search: params,
+        },
+        ...current,
+      ].slice(0, 8),
+    );
     setLoading(false);
     window.setTimeout(
       () =>
@@ -54,6 +93,28 @@ export default function App() {
           ?.scrollIntoView({ behavior: 'smooth' }),
       0,
     );
+  }
+
+  function toggleFavorite(offer: FlightOffer) {
+    setFavorites((current) =>
+      current.some((item) => item.id === offer.id)
+        ? current.filter((item) => item.id !== offer.id)
+        : [offer, ...current],
+    );
+  }
+
+  function createAlert(targetPrice: number) {
+    if (!lastSearch) return;
+    setAlerts((current) => [
+      {
+        id: crypto.randomUUID(),
+        createdAt: new Date().toISOString(),
+        search: lastSearch,
+        targetPrice,
+        active: true,
+      },
+      ...current,
+    ]);
   }
 
   return (
@@ -89,8 +150,37 @@ export default function App() {
           key={`${lastSearch.origin}-${lastSearch.destination}`}
           offers={offers}
           search={lastSearch}
+          favoriteIds={favorites.map((offer) => offer.id)}
+          directFlightsOnly={settings.directFlightsOnly}
+          compact={settings.compactResults}
+          onToggleFavorite={toggleFavorite}
         />
       )}
+
+      <LocalDashboard
+        favorites={favorites}
+        history={history}
+        alerts={alerts}
+        settings={settings}
+        currentSearch={lastSearch}
+        onRemoveFavorite={(id) =>
+          setFavorites((current) => current.filter((offer) => offer.id !== id))
+        }
+        onRepeatSearch={handleSearch}
+        onClearHistory={() => setHistory([])}
+        onCreateAlert={createAlert}
+        onToggleAlert={(id) =>
+          setAlerts((current) =>
+            current.map((alert) =>
+              alert.id === id ? { ...alert, active: !alert.active } : alert,
+            ),
+          )
+        }
+        onRemoveAlert={(id) =>
+          setAlerts((current) => current.filter((alert) => alert.id !== id))
+        }
+        onUpdateSettings={setSettings}
+      />
 
       <section
         id="recursos"
