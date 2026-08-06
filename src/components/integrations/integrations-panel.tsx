@@ -35,7 +35,7 @@ export function IntegrationsPanel() {
       <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
         <div className="max-w-3xl">
           <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-            Sprint 10
+            Sprint 11
           </span>
           <h2
             id="integrations-title"
@@ -65,8 +65,8 @@ export function IntegrationsPanel() {
             <p className="mt-1 text-sm leading-6 text-muted-foreground">
               Variáveis sem o prefixo{' '}
               <code className="rounded bg-muted px-1 py-0.5">VITE_</code>{' '}
-              permanecem reservadas ao futuro backend. As ofertas de voo
-              continuam vindo do provider demonstrativo.
+              permanecem reservadas ao backend. Sem configuração do Amadeus, as
+              ofertas continuam vindo do provider demonstrativo.
             </p>
           </div>
         </div>

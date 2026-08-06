@@ -21,6 +21,18 @@ export const mockFlightTemplates: MockFlightTemplate[] = [
     score: 94,
     priceKind: 'estimate',
     fareNote: 'Bagagem despachada não incluída na estimativa.',
+    fare: {
+      name: 'Tarifa econômica estimada',
+      cabin: 'Econômica',
+      cabinBaggage: {
+        status: 'included',
+        description: '1 item de mão (estimativa)',
+      },
+      checkedBaggage: {
+        status: 'not-included',
+        description: 'Não incluída na estimativa',
+      },
+    },
     supplier: {
       websiteUrl: 'https://www.voeazul.com.br/home/br/pt/home',
       supportUrl: 'https://www.voeazul.com.br/home/br/pt/home',
@@ -41,6 +53,18 @@ export const mockFlightTemplates: MockFlightTemplate[] = [
     score: 91,
     priceKind: 'estimate',
     fareNote: 'Bagagem despachada não incluída na estimativa.',
+    fare: {
+      name: 'Tarifa econômica estimada',
+      cabin: 'Econômica',
+      cabinBaggage: {
+        status: 'included',
+        description: '1 item de mão (estimativa)',
+      },
+      checkedBaggage: {
+        status: 'not-included',
+        description: 'Não incluída na estimativa',
+      },
+    },
     supplier: {
       websiteUrl: 'https://www.latamairlines.com/br/pt',
       supportUrl: 'https://www.latamairlines.com/br/pt/central-ajuda',
@@ -61,6 +85,18 @@ export const mockFlightTemplates: MockFlightTemplate[] = [
     score: 86,
     priceKind: 'estimate',
     fareNote: 'Bagagem despachada não incluída na estimativa.',
+    fare: {
+      name: 'Tarifa econômica estimada',
+      cabin: 'Econômica',
+      cabinBaggage: {
+        status: 'included',
+        description: '1 item de mão (estimativa)',
+      },
+      checkedBaggage: {
+        status: 'not-included',
+        description: 'Não incluída na estimativa',
+      },
+    },
     supplier: {
       websiteUrl: 'https://www.voegol.com.br/',
       supportUrl: 'https://www.voegol.com.br/atendimento/canais-oficiais-gol',
@@ -81,6 +117,18 @@ export const mockFlightTemplates: MockFlightTemplate[] = [
     score: 82,
     priceKind: 'estimate',
     fareNote: 'Bagagem despachada não incluída na estimativa.',
+    fare: {
+      name: 'Tarifa econômica estimada',
+      cabin: 'Econômica',
+      cabinBaggage: {
+        status: 'included',
+        description: '1 item de mão (estimativa)',
+      },
+      checkedBaggage: {
+        status: 'not-included',
+        description: 'Não incluída na estimativa',
+      },
+    },
     supplier: {
       websiteUrl: 'https://www.voeazul.com.br/home/br/pt/home',
       supportUrl: 'https://www.voeazul.com.br/home/br/pt/home',
@@ -101,6 +149,18 @@ export const mockFlightTemplates: MockFlightTemplate[] = [
     score: 88,
     priceKind: 'estimate',
     fareNote: 'Bagagem despachada não incluída na estimativa.',
+    fare: {
+      name: 'Tarifa econômica estimada',
+      cabin: 'Econômica',
+      cabinBaggage: {
+        status: 'included',
+        description: '1 item de mão (estimativa)',
+      },
+      checkedBaggage: {
+        status: 'not-included',
+        description: 'Não incluída na estimativa',
+      },
+    },
     supplier: {
       websiteUrl: 'https://www.latamairlines.com/br/pt',
       supportUrl: 'https://www.latamairlines.com/br/pt/central-ajuda',

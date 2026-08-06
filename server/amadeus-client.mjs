@@ -51,10 +51,53 @@ function timeLabel(value) {
 }
 
 const suppliers = {
-  AD: ['Azul', 'https://www.voeazul.com.br/home/br/pt/home'],
-  G3: ['GOL', 'https://www.voegol.com.br/'],
-  LA: ['LATAM', 'https://www.latamairlines.com/br/pt'],
+  AD: {
+    name: 'Azul',
+    websiteUrl: 'https://www.voeazul.com.br/home/br/pt/home',
+    supportUrl: 'https://www.voeazul.com.br/home/br/pt/home',
+  },
+  G3: {
+    name: 'GOL',
+    websiteUrl: 'https://www.voegol.com.br/',
+    supportUrl: 'https://www.voegol.com.br/atendimento/canais-oficiais-gol',
+  },
+  LA: {
+    name: 'LATAM',
+    websiteUrl: 'https://www.latamairlines.com/br/pt',
+    supportUrl: 'https://www.latamairlines.com/br/pt/central-ajuda',
+  },
 };
+
+const cabinLabels = {
+  ECONOMY: 'Econômica',
+  PREMIUM_ECONOMY: 'Econômica premium',
+  BUSINESS: 'Executiva',
+  FIRST: 'Primeira classe',
+};
+
+function baggageAllowance(baggage) {
+  if (!baggage) {
+    return { status: 'unknown', description: 'Não informado pelo provedor' };
+  }
+  if (Number.isFinite(baggage.quantity)) {
+    return baggage.quantity > 0
+      ? {
+          status: 'included',
+          description: `${baggage.quantity} volume${baggage.quantity > 1 ? 's' : ''}`,
+        }
+      : { status: 'not-included', description: 'Não incluída' };
+  }
+  if (Number.isFinite(baggage.weight)) {
+    return {
+      status: baggage.weight > 0 ? 'included' : 'not-included',
+      description:
+        baggage.weight > 0
+          ? `Até ${baggage.weight} ${baggage.weightUnit ?? 'kg'}`
+          : 'Não incluída',
+    };
+  }
+  return { status: 'unknown', description: 'Regra não detalhada' };
+}
 
 function mapOffer(offer, dictionaries, index) {
   const itinerary = offer.itineraries[0];
@@ -64,8 +107,18 @@ function mapOffer(offer, dictionaries, index) {
   const knownSupplier = suppliers[airlineCode];
   if (!knownSupplier) return null;
   const airline =
-    dictionaries?.carriers?.[airlineCode] ?? knownSupplier?.[0] ?? airlineCode;
-  const websiteUrl = knownSupplier[1];
+    dictionaries?.carriers?.[airlineCode] ?? knownSupplier.name ?? airlineCode;
+  const fareSegments =
+    offer.travelerPricings?.flatMap(
+      (traveler) => traveler.fareDetailsBySegment ?? [],
+    ) ?? [];
+  const primaryFare = fareSegments[0];
+  const checkedBaggage = fareSegments.find(
+    (fare) => fare.includedCheckedBags,
+  )?.includedCheckedBags;
+  const cabinBaggage = fareSegments.find(
+    (fare) => fare.includedCabinBags,
+  )?.includedCabinBags;
 
   return {
     id: `amadeus-${offer.id}-${index}`,
@@ -85,10 +138,23 @@ function mapOffer(offer, dictionaries, index) {
     priceKind: 'live',
     checkedAt: new Date().toISOString(),
     fareNote:
-      'Preço retornado pela busca; bagagem e regras variam conforme a tarifa.',
+      'Dados retornados pela busca; regras podem variar entre os trechos.',
+    fare: {
+      name:
+        primaryFare?.brandedFareLabel ??
+        primaryFare?.brandedFare ??
+        'Tarifa informada pelo provedor',
+      cabin:
+        cabinLabels[primaryFare?.cabin] ??
+        primaryFare?.cabin ??
+        'Não informada',
+      bookingClass: primaryFare?.class,
+      cabinBaggage: baggageAllowance(cabinBaggage),
+      checkedBaggage: baggageAllowance(checkedBaggage),
+    },
     supplier: {
-      websiteUrl,
-      supportUrl: websiteUrl,
+      websiteUrl: knownSupplier.websiteUrl,
+      supportUrl: knownSupplier.supportUrl,
     },
   };
 }
