@@ -33,6 +33,32 @@ function locationCode(value) {
   );
 }
 
+function validateSearch(input, origin, destination) {
+  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+  const travelers = Number(input.travelers);
+
+  if (!origin || !destination)
+    return 'Origem e destino precisam usar códigos IATA válidos.';
+  if (origin === destination)
+    return 'Origem e destino precisam ser diferentes.';
+  if (
+    !datePattern.test(input.departureDate) ||
+    !datePattern.test(input.returnDate)
+  ) {
+    return 'As datas precisam usar o formato AAAA-MM-DD.';
+  }
+  if (input.departureDate < new Date().toISOString().split('T')[0]) {
+    return 'A data de ida não pode estar no passado.';
+  }
+  if (input.returnDate < input.departureDate) {
+    return 'A data de volta deve ser igual ou posterior à ida.';
+  }
+  if (!Number.isInteger(travelers) || travelers < 1 || travelers > 9) {
+    return 'A quantidade de viajantes deve estar entre 1 e 9.';
+  }
+  return null;
+}
+
 function send(response, status, payload) {
   response.writeHead(status, {
     'Content-Type': 'application/json; charset=utf-8',
@@ -90,11 +116,8 @@ const server = createServer(async (request, response) => {
     const input = await readJson(request);
     const origin = locationCode(input.origin);
     const destination = locationCode(input.destination);
-    if (!origin || !destination || !input.departureDate || !input.returnDate) {
-      return send(response, 400, {
-        error: 'Origem, destino e datas são obrigatórios.',
-      });
-    }
+    const validationError = validateSearch(input, origin, destination);
+    if (validationError) return send(response, 400, { error: validationError });
 
     const config = getAmadeusConfig();
     if (!config)

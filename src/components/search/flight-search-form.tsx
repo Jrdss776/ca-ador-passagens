@@ -1,5 +1,6 @@
 import {
   ArrowRightLeft,
+  CircleAlert,
   CalendarDays,
   LoaderCircle,
   Search,
@@ -11,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { validateFlightSearch } from '@/lib/search-validation';
 import type { CabinClass, FlightSearchParams } from '@/types/flight';
 
 interface FlightSearchFormProps {
@@ -23,6 +25,9 @@ const today = new Date().toISOString().split('T')[0];
 export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
+  const [departureDate, setDepartureDate] = useState('');
+  const [returnDate, setReturnDate] = useState('');
+  const [validationError, setValidationError] = useState('');
 
   function handleSwap() {
     setOrigin(destination);
@@ -33,7 +38,7 @@ export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    onSearch({
+    const validation = validateFlightSearch({
       origin: String(data.get('origin')),
       destination: String(data.get('destination')),
       departureDate: String(data.get('departureDate')),
@@ -42,6 +47,14 @@ export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
       cabinClass: String(data.get('cabinClass')) as CabinClass,
       flexibleDates: data.get('flexibleDates') === 'on',
     });
+
+    if (!validation.ok) {
+      setValidationError(validation.error);
+      return;
+    }
+
+    setValidationError('');
+    onSearch(validation.value);
   }
 
   return (
@@ -111,6 +124,12 @@ export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
                   name="departureDate"
                   type="date"
                   min={today}
+                  value={departureDate}
+                  onChange={(event) => {
+                    const nextDate = event.target.value;
+                    setDepartureDate(nextDate);
+                    if (returnDate && returnDate < nextDate) setReturnDate('');
+                  }}
                   className="pl-10"
                   required
                 />
@@ -124,7 +143,9 @@ export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
                   id="returnDate"
                   name="returnDate"
                   type="date"
-                  min={today}
+                  min={departureDate || today}
+                  value={returnDate}
+                  onChange={(event) => setReturnDate(event.target.value)}
                   className="pl-10"
                   required
                 />
@@ -159,6 +180,16 @@ export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
               </select>
             </div>
           </fieldset>
+
+          {validationError && (
+            <div
+              className="border-destructive/30 bg-destructive/10 text-destructive flex items-start gap-2 rounded-xl border px-4 py-3 text-sm"
+              role="alert"
+            >
+              <CircleAlert className="mt-0.5 size-4 shrink-0" />
+              {validationError}
+            </div>
+          )}
 
           <div className="flex flex-col gap-3 border-t pt-5 sm:flex-row sm:items-center sm:justify-between">
             <label className="flex items-center gap-2 text-sm text-muted-foreground">

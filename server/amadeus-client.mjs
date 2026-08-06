@@ -106,6 +106,12 @@ export function getAmadeusConfig() {
 
 export async function searchAmadeusFlights(params, config) {
   const token = await getAccessToken(config);
+  const travelClasses = {
+    economy: 'ECONOMY',
+    'premium-economy': 'PREMIUM_ECONOMY',
+    business: 'BUSINESS',
+    first: 'FIRST',
+  };
   const query = new URLSearchParams({
     originLocationCode: params.origin,
     destinationLocationCode: params.destination,
@@ -113,6 +119,7 @@ export async function searchAmadeusFlights(params, config) {
     returnDate: params.returnDate,
     adults: String(params.travelers),
     currencyCode: 'BRL',
+    travelClass: travelClasses[params.cabinClass] ?? 'ECONOMY',
     max: '10',
   });
   const response = await fetchWithTimeout(
