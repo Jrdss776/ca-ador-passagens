@@ -1,30 +1,71 @@
 # Caçador de Passagens
 
-Mini app React + TypeScript para busca inteligente de passagens, com modo demonstração e estrutura preparada para APIs públicas.
+Fundação do mini app para planejamento e comparação de passagens. Esta entrega corresponde exclusivamente à **Sprint 1**: infraestrutura, padrões visuais e componentes base. Busca, dados simulados e integrações com APIs ainda não fazem parte desta versão.
 
-## Executar
+## Tecnologias
+
+- React 18 + Vite 5 + TypeScript;
+- Tailwind CSS;
+- shadcn/ui, com aliases e componentes base configurados;
+- ESLint e Prettier;
+- tema claro/escuro com preferência persistida.
+
+## Requisitos
+
+- Node.js 20.19 ou superior (ou 22.12+);
+- npm 10 ou superior.
+
+## Como executar
 
 ```bash
 npm install
+copy .env.example .env
 npm run dev
 ```
 
-Abra o endereço exibido pelo Vite.
+O servidor local usa `http://localhost:5173` por padrão. Em macOS ou Linux, substitua o segundo comando por `cp .env.example .env`.
 
-## O que já funciona
+## Comandos disponíveis
 
-- formulário de pesquisa;
-- modo Alta Temporada;
-- resultados simulados;
-- pontuação de custo-benefício;
-- favoritos no LocalStorage;
-- layout responsivo;
-- arquitetura `FlightProvider`.
+| Comando                | Finalidade                                 |
+| ---------------------- | ------------------------------------------ |
+| `npm run dev`          | inicia o ambiente local                    |
+| `npm run build`        | valida tipos e gera a versão de produção   |
+| `npm run preview`      | abre localmente o build gerado             |
+| `npm run lint`         | executa as regras de qualidade             |
+| `npm run format`       | formata o código                           |
+| `npm run format:check` | verifica a formatação sem alterar arquivos |
+| `npm run typecheck`    | valida os tipos TypeScript                 |
 
-## Próximo passo técnico
+## Estrutura
 
-Criar um backend ou função serverless para conectar Amadeus Self-Service sem expor chaves no navegador. Open-Meteo, Frankfurter e APIs de feriados podem ser integradas diretamente quando não exigirem segredo.
+```text
+src/
+├── components/
+│   ├── layout/     # estrutura visual principal
+│   ├── theme/      # provedor e controle de tema
+│   └── ui/         # componentes base no padrão shadcn/ui
+├── hooks/          # hooks reutilizáveis (próximas sprints)
+├── lib/            # utilitários compartilhados
+├── services/       # contratos e integrações futuras
+├── styles/         # estilos globais e tokens do tema
+└── types/          # tipos de domínio futuros
+```
 
-## Aviso
+## Variáveis de ambiente
 
-Os preços exibidos nesta versão são simulados e identificados como demonstração.
+Copie `.env.example` para `.env`. Nesta sprint existe apenas `VITE_APP_NAME`, sem credenciais ou chamadas externas. Nunca envie o arquivo `.env` ao repositório.
+
+## Escopo da Sprint 1
+
+- base React + Vite + TypeScript;
+- Tailwind e configuração shadcn/ui;
+- ESLint e Prettier;
+- organização inicial de pastas;
+- ambiente documentado;
+- componentes `Button` e `Card`;
+- tema claro/escuro e layout responsivo principal.
+
+## Próxima etapa
+
+A Sprint 2 implementará a interface de pesquisa, navegação e refinamentos responsivos. Nenhuma API ou busca real foi adicionada nesta entrega.
