@@ -12,7 +12,7 @@ Fundação do mini app para planejamento e comparação de passagens. Esta entre
 
 ## Requisitos
 
-- Node.js 20 ou superior;
+- Node.js 20.19 ou superior (ou 22.12+);
 - npm 10 ou superior.
 
 ## Como executar
