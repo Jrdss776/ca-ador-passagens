@@ -6,10 +6,14 @@ import {
   Sparkles,
   WalletCards,
 } from 'lucide-react';
+import { useState } from 'react';
 
 import { AppShell } from '@/components/layout/app-shell';
+import { FlightResults } from '@/components/results/flight-results';
 import { FlightSearchForm } from '@/components/search/flight-search-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { mockFlightProvider } from '@/services/mock-flight-provider';
+import type { FlightOffer, FlightSearchParams } from '@/types/flight';
 
 const benefits = [
   {
@@ -33,6 +37,25 @@ const benefits = [
 ];
 
 export default function App() {
+  const [offers, setOffers] = useState<FlightOffer[]>([]);
+  const [lastSearch, setLastSearch] = useState<FlightSearchParams | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSearch(params: FlightSearchParams) {
+    setLoading(true);
+    const results = await mockFlightProvider.search(params);
+    setOffers(results);
+    setLastSearch(params);
+    setLoading(false);
+    window.setTimeout(
+      () =>
+        document
+          .querySelector('#resultados')
+          ?.scrollIntoView({ behavior: 'smooth' }),
+      0,
+    );
+  }
+
   return (
     <AppShell>
       <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-teal-800 via-teal-700 to-cyan-800 px-6 pb-28 pt-14 text-white shadow-xl sm:px-10 lg:px-16 lg:py-20 lg:pb-32">
@@ -59,7 +82,15 @@ export default function App() {
         </div>
       </section>
 
-      <FlightSearchForm />
+      <FlightSearchForm loading={loading} onSearch={handleSearch} />
+
+      {lastSearch && (
+        <FlightResults
+          key={`${lastSearch.origin}-${lastSearch.destination}`}
+          offers={offers}
+          search={lastSearch}
+        />
+      )}
 
       <section
         id="recursos"
@@ -121,9 +152,9 @@ export default function App() {
               Uma interface pronta para evoluir
             </h2>
             <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">
-              Esta sprint entrega somente a experiência visual de pesquisa. O
-              motor de comparação e os resultados simulados serão implementados
-              na Sprint 3.
+              O motor de comparação utiliza dados simulados nesta etapa.
+              Integrações externas e recursos pessoais serão adicionados somente
+              nas próximas sprints.
             </p>
           </div>
           <div

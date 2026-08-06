@@ -1,13 +1,51 @@
-import { ArrowRightLeft, CalendarDays, MapPin, Search } from 'lucide-react';
+import {
+  ArrowRightLeft,
+  CalendarDays,
+  LoaderCircle,
+  MapPin,
+  Search,
+} from 'lucide-react';
+import { useRef, type FormEvent } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import type { CabinClass, FlightSearchParams } from '@/types/flight';
+
+interface FlightSearchFormProps {
+  loading: boolean;
+  onSearch: (params: FlightSearchParams) => void;
+}
 
 const today = new Date().toISOString().split('T')[0];
 
-export function FlightSearchForm() {
+export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
+  const originRef = useRef<HTMLInputElement>(null);
+  const destinationRef = useRef<HTMLInputElement>(null);
+
+  function handleSwap() {
+    if (!originRef.current || !destinationRef.current) return;
+    const origin = originRef.current.value;
+    originRef.current.value = destinationRef.current.value;
+    destinationRef.current.value = origin;
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    onSearch({
+      origin: String(data.get('origin')),
+      destination: String(data.get('destination')),
+      departureDate: String(data.get('departureDate')),
+      returnDate: String(data.get('returnDate')),
+      travelers: Number(data.get('travelers')),
+      cabinClass: String(data.get('cabinClass')) as CabinClass,
+      flexibleDates: data.get('flexibleDates') === 'on',
+    });
+  }
+
   return (
     <Card
       id="buscar"
@@ -16,24 +54,33 @@ export function FlightSearchForm() {
       <CardHeader className="gap-1 pb-5">
         <CardTitle className="text-2xl">Para onde vamos?</CardTitle>
         <p className="text-sm text-muted-foreground">
-          Preencha os dados da viagem. A consulta de ofertas será ativada na
-          Sprint 3.
+          Compare ofertas simuladas e descubra boas possibilidades para sua
+          viagem.
         </p>
       </CardHeader>
       <CardContent>
-        <form className="grid gap-5" aria-label="Pesquisa de passagens">
-          <fieldset className="grid gap-4 lg:grid-cols-[1fr_auto_1fr] lg:items-end">
+        <form
+          className="grid gap-5"
+          aria-label="Pesquisa de passagens"
+          onSubmit={handleSubmit}
+        >
+          <fieldset
+            className="grid gap-4 lg:grid-cols-[1fr_auto_1fr] lg:items-end"
+            disabled={loading}
+          >
             <legend className="sr-only">Trecho da viagem</legend>
             <div className="grid gap-2">
               <Label htmlFor="origin">Origem</Label>
               <div className="relative">
                 <MapPin className="pointer-events-none absolute left-3 top-3.5 size-4 text-muted-foreground" />
                 <Input
+                  ref={originRef}
                   id="origin"
                   name="origin"
-                  placeholder="Cidade ou aeroporto"
+                  placeholder="Ex.: São Paulo"
                   className="pl-10"
                   autoComplete="off"
+                  required
                 />
               </div>
             </div>
@@ -44,7 +91,7 @@ export function FlightSearchForm() {
               size="icon"
               className="hidden rounded-full lg:inline-flex"
               aria-label="Inverter origem e destino"
-              disabled
+              onClick={handleSwap}
             >
               <ArrowRightLeft className="size-4" />
             </Button>
@@ -54,41 +101,48 @@ export function FlightSearchForm() {
               <div className="relative">
                 <MapPin className="pointer-events-none absolute left-3 top-3.5 size-4 text-muted-foreground" />
                 <Input
+                  ref={destinationRef}
                   id="destination"
                   name="destination"
-                  placeholder="Cidade ou aeroporto"
+                  placeholder="Ex.: Recife"
                   className="pl-10"
                   autoComplete="off"
+                  required
                 />
               </div>
             </div>
           </fieldset>
 
-          <fieldset className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <fieldset
+            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+            disabled={loading}
+          >
             <legend className="sr-only">Datas e preferências</legend>
             <div className="grid gap-2">
-              <Label htmlFor="departure">Ida</Label>
+              <Label htmlFor="departureDate">Ida</Label>
               <div className="relative">
                 <CalendarDays className="pointer-events-none absolute left-3 top-3.5 size-4 text-muted-foreground" />
                 <Input
-                  id="departure"
-                  name="departure"
+                  id="departureDate"
+                  name="departureDate"
                   type="date"
                   min={today}
                   className="pl-10"
+                  required
                 />
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="return">Volta</Label>
+              <Label htmlFor="returnDate">Volta</Label>
               <div className="relative">
                 <CalendarDays className="pointer-events-none absolute left-3 top-3.5 size-4 text-muted-foreground" />
                 <Input
-                  id="return"
-                  name="return"
+                  id="returnDate"
+                  name="returnDate"
                   type="date"
                   min={today}
                   className="pl-10"
+                  required
                 />
               </div>
             </div>
@@ -98,41 +152,51 @@ export function FlightSearchForm() {
                 id="travelers"
                 name="travelers"
                 className="h-11 rounded-md border bg-background px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                defaultValue="1"
               >
-                <option>1 adulto</option>
-                <option>2 adultos</option>
-                <option>3 adultos</option>
-                <option>4 adultos</option>
+                <option value="1">1 adulto</option>
+                <option value="2">2 adultos</option>
+                <option value="3">3 adultos</option>
+                <option value="4">4 adultos</option>
               </select>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="cabin">Classe</Label>
+              <Label htmlFor="cabinClass">Classe</Label>
               <select
-                id="cabin"
-                name="cabin"
+                id="cabinClass"
+                name="cabinClass"
                 className="h-11 rounded-md border bg-background px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                defaultValue="economy"
               >
-                <option>Econômica</option>
-                <option>Econômica premium</option>
-                <option>Executiva</option>
-                <option>Primeira classe</option>
+                <option value="economy">Econômica</option>
+                <option value="premium-economy">Econômica premium</option>
+                <option value="business">Executiva</option>
+                <option value="first">Primeira classe</option>
               </select>
             </div>
           </fieldset>
 
           <div className="flex flex-col gap-3 border-t pt-5 sm:flex-row sm:items-center sm:justify-between">
             <label className="flex items-center gap-2 text-sm text-muted-foreground">
-              <input type="checkbox" className="size-4 accent-primary" />
+              <input
+                type="checkbox"
+                name="flexibleDates"
+                className="size-4 accent-primary"
+                disabled={loading}
+              />
               Tenho flexibilidade nas datas
             </label>
             <Button
-              type="button"
+              type="submit"
               className="h-11 sm:min-w-44"
-              disabled
-              title="Disponível na Sprint 3"
+              disabled={loading}
             >
-              <Search className="size-4" />
-              Buscar passagens
+              {loading ? (
+                <LoaderCircle className="size-4 animate-spin" />
+              ) : (
+                <Search className="size-4" />
+              )}
+              {loading ? 'Comparando...' : 'Buscar passagens'}
             </Button>
           </div>
         </form>
