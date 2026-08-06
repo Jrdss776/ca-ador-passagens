@@ -1,6 +1,6 @@
 # Caçador de Passagens
 
-Mini app para planejamento e comparação de passagens. As Sprints 1 a 3 estão concluídas: base técnica, interface responsiva e motor de comparação demonstrativo. As ofertas são simuladas e nenhuma API externa é consultada nesta versão.
+Mini app para planejamento e comparação de passagens. As Sprints 1 a 4 estão concluídas: base técnica, interface responsiva, motor demonstrativo e recursos pessoais locais. As ofertas são simuladas e nenhuma API externa é consultada nesta versão.
 
 ## Tecnologias
 
@@ -11,6 +11,7 @@ Mini app para planejamento e comparação de passagens. As Sprints 1 a 3 estão 
 - tema claro/escuro com preferência persistida.
 - página inicial e formulário responsivo de pesquisa.
 - provider mock, resultados demonstrativos, filtros e ordenação.
+- favoritos, histórico, alertas e configurações persistidos localmente.
 
 ## Requisitos
 
@@ -74,7 +75,10 @@ Copie `.env.example` para `.env`. Nesta sprint existe apenas `VITE_APP_NAME`, se
 - provider local com cinco ofertas identificadas como demonstração;
 - resultados com filtros de escalas e companhia;
 - ordenação por recomendação, preço ou duração.
+- favoritos de ofertas e histórico das oito pesquisas mais recentes;
+- alertas de preço locais, com ativação, pausa e remoção;
+- configurações de aeroporto, voos diretos e densidade dos resultados.
 
 ## Próxima etapa
 
-A Sprint 4 implementará favoritos, histórico, alertas e configurações locais. Nenhuma API real, compra ou reserva foi adicionada nesta entrega.
+A Sprint 5 preparará a tela de integrações e a estrutura para providers externos. Nenhuma API real, conta, notificação externa, compra ou reserva foi adicionada nesta entrega.

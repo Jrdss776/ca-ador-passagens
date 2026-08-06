@@ -1,10 +1,14 @@
 import { Menu, Plane } from 'lucide-react';
-import type { ReactNode } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 
 export function AppShell({ children }: { children: ReactNode }) {
   const appName = import.meta.env.VITE_APP_NAME ?? 'Caçador de Passagens';
+
+  function closeMobileMenu(event: MouseEvent<HTMLAnchorElement>) {
+    event.currentTarget.closest('details')?.removeAttribute('open');
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -45,6 +49,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                 Recursos
               </a>
               <a
+                href="#minha-area"
+                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                Minha área
+              </a>
+              <a
                 href="#sobre"
                 className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
@@ -66,18 +76,28 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <a
                   href="#buscar"
                   className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
+                  onClick={closeMobileMenu}
                 >
                   Buscar
                 </a>
                 <a
                   href="#recursos"
                   className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
+                  onClick={closeMobileMenu}
                 >
                   Recursos
                 </a>
                 <a
+                  href="#minha-area"
+                  className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
+                  onClick={closeMobileMenu}
+                >
+                  Minha área
+                </a>
+                <a
                   href="#sobre"
                   className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
+                  onClick={closeMobileMenu}
                 >
                   Sobre
                 </a>

@@ -1,6 +1,8 @@
-import { Clock3, Plane, Sparkles } from 'lucide-react';
+import { Clock3, Heart, Plane, Sparkles } from 'lucide-react';
 
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import type { FlightOffer } from '@/types/flight';
 
 const priceFormatter = new Intl.NumberFormat('pt-BR', {
@@ -9,11 +11,28 @@ const priceFormatter = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 0,
 });
 
-export function FlightOfferCard({ offer }: { offer: FlightOffer }) {
+interface FlightOfferCardProps {
+  offer: FlightOffer;
+  favorite: boolean;
+  compact: boolean;
+  onToggleFavorite: (offer: FlightOffer) => void;
+}
+
+export function FlightOfferCard({
+  offer,
+  favorite,
+  compact,
+  onToggleFavorite,
+}: FlightOfferCardProps) {
   return (
     <Card className="overflow-hidden transition-shadow hover:shadow-md">
       <CardContent className="p-0">
-        <div className="grid gap-5 p-5 sm:grid-cols-[minmax(7rem,0.7fr)_minmax(16rem,2fr)_minmax(8rem,0.8fr)] sm:items-center sm:p-6">
+        <div
+          className={cn(
+            'grid gap-5 p-5 sm:grid-cols-[minmax(7rem,0.7fr)_minmax(16rem,2fr)_minmax(8rem,0.8fr)] sm:items-center',
+            compact ? 'sm:p-4' : 'sm:p-6',
+          )}
+        >
           <div className="flex items-center gap-3">
             <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-sm font-bold text-primary">
               {offer.airlineCode}
@@ -59,7 +78,25 @@ export function FlightOfferCard({ offer }: { offer: FlightOffer }) {
             </div>
           </div>
 
-          <div className="border-t pt-4 sm:border-l sm:border-t-0 sm:pl-5 sm:pt-0 sm:text-right">
+          <div className="relative border-t pt-4 sm:border-l sm:border-t-0 sm:pl-5 sm:pt-0 sm:text-right">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute -right-2 -top-2 size-8 sm:-top-4"
+              onClick={() => onToggleFavorite(offer)}
+              aria-label={
+                favorite
+                  ? `Remover ${offer.airline} dos favoritos`
+                  : `Adicionar ${offer.airline} aos favoritos`
+              }
+            >
+              <Heart
+                className={cn(
+                  'size-4',
+                  favorite && 'fill-current text-rose-500',
+                )}
+              />
+            </Button>
             <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
               <Sparkles className="size-3" /> Nota {offer.score}
             </span>

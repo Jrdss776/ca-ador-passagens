@@ -12,6 +12,10 @@ import type {
 interface FlightResultsProps {
   offers: FlightOffer[];
   search: FlightSearchParams;
+  favoriteIds: string[];
+  directFlightsOnly: boolean;
+  compact: boolean;
+  onToggleFavorite: (offer: FlightOffer) => void;
 }
 
 function durationInMinutes(duration: string) {
@@ -20,7 +24,14 @@ function durationInMinutes(duration: string) {
   return hours * 60 + minutes;
 }
 
-export function FlightResults({ offers, search }: FlightResultsProps) {
+export function FlightResults({
+  offers,
+  search,
+  favoriteIds,
+  directFlightsOnly,
+  compact,
+  onToggleFavorite,
+}: FlightResultsProps) {
   const [sort, setSort] = useState<FlightSort>('recommended');
   const [stops, setStops] = useState<'all' | 'direct' | 'one'>('all');
   const [airline, setAirline] = useState('all');
@@ -33,8 +44,11 @@ export function FlightResults({ offers, search }: FlightResultsProps) {
   const visibleOffers = useMemo(() => {
     const filtered = offers.filter((offer) => {
       const matchesStops =
-        stops === 'all' ||
-        (stops === 'direct' ? offer.stops === 0 : offer.stops === 1);
+        directFlightsOnly || stops === 'direct'
+          ? offer.stops === 0
+          : stops === 'one'
+            ? offer.stops === 1
+            : true;
       const matchesAirline = airline === 'all' || offer.airline === airline;
       return matchesStops && matchesAirline;
     });
@@ -48,7 +62,7 @@ export function FlightResults({ offers, search }: FlightResultsProps) {
         );
       return b.score - a.score;
     });
-  }, [airline, offers, sort, stops]);
+  }, [airline, directFlightsOnly, offers, sort, stops]);
 
   return (
     <section
@@ -84,8 +98,9 @@ export function FlightResults({ offers, search }: FlightResultsProps) {
             <select
               id="stops-filter"
               className="h-10 rounded-md border bg-background px-3 text-sm"
-              value={stops}
+              value={directFlightsOnly ? 'direct' : stops}
               onChange={(event) => setStops(event.target.value as typeof stops)}
+              disabled={directFlightsOnly}
             >
               <option value="all">Todas</option>
               <option value="direct">Somente diretos</option>
@@ -136,7 +151,13 @@ export function FlightResults({ offers, search }: FlightResultsProps) {
 
       <div className="grid gap-3">
         {visibleOffers.map((offer) => (
-          <FlightOfferCard key={offer.id} offer={offer} />
+          <FlightOfferCard
+            key={offer.id}
+            offer={offer}
+            favorite={favoriteIds.includes(offer.id)}
+            compact={compact}
+            onToggleFavorite={onToggleFavorite}
+          />
         ))}
       </div>
 
