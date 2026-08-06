@@ -1,5 +1,7 @@
 import {
   CalendarRange,
+  CircleAlert,
+  Info,
   MapPinned,
   PlaneTakeoff,
   Route,
@@ -15,7 +17,7 @@ import { FlightResults } from '@/components/results/flight-results';
 import { FlightSearchForm } from '@/components/search/flight-search-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useLocalStorage } from '@/hooks/use-local-storage';
-import { resilientFlightProvider } from '@/services/resilient-flight-provider';
+import { searchFlightOffers } from '@/services/resilient-flight-provider';
 import type { FlightOffer, FlightSearchParams } from '@/types/flight';
 import type {
   LocalSettings,
@@ -54,6 +56,8 @@ export default function App() {
   const [offers, setOffers] = useState<FlightOffer[]>([]);
   const [lastSearch, setLastSearch] = useState<FlightSearchParams | null>(null);
   const [loading, setLoading] = useState(false);
+  const [searchNotice, setSearchNotice] = useState('');
+  const [searchError, setSearchError] = useState('');
   const [favorites, setFavorites] = useLocalStorage<FlightOffer[]>(
     'flight-hunter:favorites',
     [],
@@ -73,27 +77,40 @@ export default function App() {
 
   async function handleSearch(params: FlightSearchParams) {
     setLoading(true);
-    const results = await resilientFlightProvider.search(params);
-    setOffers(results);
-    setLastSearch(params);
-    setHistory((current) =>
-      [
-        {
-          id: crypto.randomUUID(),
-          createdAt: new Date().toISOString(),
-          search: params,
-        },
-        ...current,
-      ].slice(0, 8),
-    );
-    setLoading(false);
-    window.setTimeout(
-      () =>
-        document
-          .querySelector('#resultados')
-          ?.scrollIntoView({ behavior: 'smooth' }),
-      0,
-    );
+    setSearchNotice('');
+    setSearchError('');
+
+    try {
+      const result = await searchFlightOffers(params);
+      setOffers(result.offers);
+      setSearchNotice(result.notice ?? '');
+      setLastSearch(params);
+      setHistory((current) =>
+        [
+          {
+            id: crypto.randomUUID(),
+            createdAt: new Date().toISOString(),
+            search: params,
+          },
+          ...current,
+        ].slice(0, 8),
+      );
+      window.setTimeout(
+        () =>
+          document
+            .querySelector('#resultados')
+            ?.scrollIntoView({ behavior: 'smooth' }),
+        0,
+      );
+    } catch {
+      setOffers([]);
+      setLastSearch(null);
+      setSearchError(
+        'Não foi possível concluir a busca. Verifique sua conexão e tente novamente.',
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   function toggleFavorite(offer: FlightOffer) {
@@ -145,6 +162,24 @@ export default function App() {
       </section>
 
       <FlightSearchForm loading={loading} onSearch={handleSearch} />
+
+      <div className="mt-5" aria-live="polite" aria-atomic="true">
+        {searchNotice && (
+          <div className="flex items-start gap-2 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-muted-foreground">
+            <Info className="mt-0.5 size-4 shrink-0 text-primary" />
+            <p>{searchNotice}</p>
+          </div>
+        )}
+        {searchError && (
+          <div
+            className="border-destructive/30 bg-destructive/10 text-destructive flex items-start gap-2 rounded-xl border px-4 py-3 text-sm"
+            role="alert"
+          >
+            <CircleAlert className="mt-0.5 size-4 shrink-0" />
+            <p>{searchError}</p>
+          </div>
+        )}
+      </div>
 
       {lastSearch && (
         <FlightResults

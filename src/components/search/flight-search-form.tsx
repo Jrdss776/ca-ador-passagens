@@ -73,6 +73,7 @@ export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
         <form
           className="grid gap-5"
           aria-label="Pesquisa de passagens"
+          aria-busy={loading}
           onSubmit={handleSubmit}
         >
           <fieldset
@@ -185,6 +186,7 @@ export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
             <div
               className="border-destructive/30 bg-destructive/10 text-destructive flex items-start gap-2 rounded-xl border px-4 py-3 text-sm"
               role="alert"
+              id="search-validation-error"
             >
               <CircleAlert className="mt-0.5 size-4 shrink-0" />
               {validationError}
@@ -205,6 +207,9 @@ export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
               type="submit"
               className="h-11 sm:min-w-44"
               disabled={loading}
+              aria-describedby={
+                validationError ? 'search-validation-error' : undefined
+              }
             >
               {loading ? (
                 <LoaderCircle className="size-4 animate-spin" />
@@ -213,6 +218,9 @@ export function FlightSearchForm({ loading, onSearch }: FlightSearchFormProps) {
               )}
               {loading ? 'Comparando...' : 'Buscar passagens'}
             </Button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {loading ? 'Pesquisa em andamento.' : ''}
+            </span>
           </div>
         </form>
       </CardContent>
