@@ -16,6 +16,21 @@ export interface FlightSegment {
   duration: string;
 }
 
+export type BaggageStatus = 'included' | 'not-included' | 'unknown';
+
+export interface BaggageAllowance {
+  status: BaggageStatus;
+  description: string;
+}
+
+export interface FareDetails {
+  name: string;
+  cabin: string;
+  bookingClass?: string;
+  cabinBaggage: BaggageAllowance;
+  checkedBaggage: BaggageAllowance;
+}
+
 export interface FlightOffer {
   id: string;
   airline: string;
@@ -30,6 +45,7 @@ export interface FlightOffer {
   priceKind: 'estimate' | 'live';
   checkedAt: string;
   fareNote: string;
+  fare: FareDetails;
   supplier: {
     websiteUrl: string;
     supportUrl: string;

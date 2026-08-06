@@ -1,4 +1,6 @@
 import {
+  BaggageClaim,
+  BriefcaseBusiness,
   Clock3,
   ExternalLink,
   Headphones,
@@ -6,6 +8,7 @@ import {
   Info,
   Plane,
   Sparkles,
+  TicketCheck,
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -36,6 +39,11 @@ export function FlightOfferCard({
     dateStyle: 'short',
     timeStyle: 'short',
   }).format(new Date(offer.checkedAt));
+  const baggageTone = {
+    included: 'text-emerald-700 dark:text-emerald-300',
+    'not-included': 'text-amber-700 dark:text-amber-300',
+    unknown: 'text-muted-foreground',
+  } as const;
 
   return (
     <Card className="overflow-hidden transition-shadow hover:shadow-md">
@@ -119,6 +127,48 @@ export function FlightOfferCard({
               {priceFormatter.format(offer.price)}
             </p>
             <p className="text-xs text-muted-foreground">total da viagem</p>
+          </div>
+        </div>
+        <div className="grid gap-3 border-t bg-background px-5 py-4 text-sm sm:grid-cols-3 sm:px-6">
+          <div className="flex items-start gap-2">
+            <TicketCheck className="mt-0.5 size-4 shrink-0 text-primary" />
+            <div>
+              <p className="font-semibold">{offer.fare.name}</p>
+              <p className="text-xs text-muted-foreground">
+                {offer.fare.cabin}
+                {offer.fare.bookingClass
+                  ? ` · Classe ${offer.fare.bookingClass}`
+                  : ''}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <BriefcaseBusiness className="mt-0.5 size-4 shrink-0 text-primary" />
+            <div>
+              <p className="font-semibold">Bagagem de mão</p>
+              <p
+                className={cn(
+                  'text-xs',
+                  baggageTone[offer.fare.cabinBaggage.status],
+                )}
+              >
+                {offer.fare.cabinBaggage.description}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <BaggageClaim className="mt-0.5 size-4 shrink-0 text-primary" />
+            <div>
+              <p className="font-semibold">Bagagem despachada</p>
+              <p
+                className={cn(
+                  'text-xs',
+                  baggageTone[offer.fare.checkedBaggage.status],
+                )}
+              >
+                {offer.fare.checkedBaggage.description}
+              </p>
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-4 border-t bg-muted/30 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
