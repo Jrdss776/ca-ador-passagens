@@ -84,8 +84,8 @@ export function FlightResults({
             Opções para {search.destination}
           </h2>
           <p className="mt-2 text-muted-foreground">
-            {visibleOffers.length} de {offers.length} ofertas simuladas para
-            comparar
+            {visibleOffers.length} de {offers.length} estimativas demonstrativas
+            para comparar
           </p>
         </div>
 

@@ -27,6 +27,13 @@ export interface FlightOffer {
   price: number;
   currency: 'BRL';
   score: number;
+  priceKind: 'estimate' | 'live';
+  checkedAt: string;
+  fareNote: string;
+  supplier: {
+    websiteUrl: string;
+    supportUrl: string;
+  };
 }
 
 export type FlightSort = 'recommended' | 'price' | 'duration';

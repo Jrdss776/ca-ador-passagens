@@ -1,4 +1,12 @@
-import { Clock3, Heart, Plane, Sparkles } from 'lucide-react';
+import {
+  Clock3,
+  ExternalLink,
+  Headphones,
+  Heart,
+  Info,
+  Plane,
+  Sparkles,
+} from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -24,6 +32,11 @@ export function FlightOfferCard({
   compact,
   onToggleFavorite,
 }: FlightOfferCardProps) {
+  const checkedAt = new Intl.DateTimeFormat('pt-BR', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  }).format(new Date(offer.checkedAt));
+
   return (
     <Card className="overflow-hidden transition-shadow hover:shadow-md">
       <CardContent className="p-0">
@@ -104,6 +117,38 @@ export function FlightOfferCard({
               {priceFormatter.format(offer.price)}
             </p>
             <p className="text-xs text-muted-foreground">total da viagem</p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 border-t bg-muted/30 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <div className="max-w-2xl text-xs leading-5 text-muted-foreground">
+            <p className="inline-flex items-center gap-1.5 font-semibold text-foreground">
+              <Info className="size-3.5 text-primary" /> Estimativa
+              demonstrativa
+            </p>
+            <p>
+              Simulada em {checkedAt}. {offer.fareNote} Confirme preço,
+              disponibilidade e condições no site oficial antes de comprar.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <Button variant="outline" size="sm" asChild>
+              <a
+                href={offer.supplier.supportUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Headphones className="size-4" /> Contatar companhia
+              </a>
+            </Button>
+            <Button size="sm" asChild>
+              <a
+                href={offer.supplier.websiteUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Ver no site oficial <ExternalLink className="size-4" />
+              </a>
+            </Button>
           </div>
         </div>
       </CardContent>
