@@ -1,41 +1,67 @@
-import { useEffect, useState } from 'react';
-import { Bell, CalendarDays, History, Plane, Settings, Sparkles } from 'lucide-react';
-import { SearchForm } from './components/SearchForm';
-import { FlightCard } from './components/FlightCard';
-import { mockProvider } from './services/mockProvider';
-import type { FlightOffer, FlightSearch } from './types/flight';
-import './styles.css';
+import { Compass, Layers3, Plane, ShieldCheck } from 'lucide-react';
+
+import { AppShell } from '@/components/layout/app-shell';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+const foundations = [
+  {
+    icon: Layers3,
+    title: 'Base consistente',
+    description:
+      'React, Vite e TypeScript configurados para evoluir com segurança.',
+  },
+  {
+    icon: Compass,
+    title: 'Interface preparada',
+    description:
+      'Tailwind CSS e componentes shadcn/ui prontos para a próxima etapa.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Qualidade desde o início',
+    description: 'Lint, formatação e validação de tipos integrados ao projeto.',
+  },
+];
 
 export default function App() {
-  const [offers, setOffers] = useState<FlightOffer[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [favorites, setFavorites] = useState<FlightOffer[]>(() => JSON.parse(localStorage.getItem('favorites') || '[]'));
-  const [lastSearch, setLastSearch] = useState<FlightSearch | null>(null);
+  return (
+    <AppShell>
+      <section className="overflow-hidden rounded-3xl bg-gradient-to-br from-teal-700 via-teal-600 to-cyan-700 px-6 py-14 text-white shadow-xl sm:px-10 lg:px-14">
+        <div className="max-w-3xl">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-sm font-medium">
+            <Plane className="size-4" />
+            Fundação concluída
+          </div>
+          <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl">
+            Sua próxima viagem começa com uma base sólida.
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-teal-50">
+            O Caçador de Passagens está pronto para receber a interface de
+            pesquisa na Sprint 2.
+          </p>
+        </div>
+      </section>
 
-  useEffect(() => localStorage.setItem('favorites', JSON.stringify(favorites)), [favorites]);
-
-  async function handleSearch(search: FlightSearch) {
-    setLoading(true);
-    setLastSearch(search);
-    const result = await mockProvider.searchFlights(search);
-    setOffers(result);
-    setLoading(false);
-    localStorage.setItem('lastSearch', JSON.stringify(search));
-  }
-
-  function toggleFavorite(offer: FlightOffer) {
-    setFavorites(prev => prev.some(item => item.id === offer.id) ? prev.filter(item => item.id !== offer.id) : [...prev, offer]);
-  }
-
-  return <div className="app-shell">
-    <header><div className="brand"><div className="logo"><Plane size={24}/></div><div><h1>Caçador de Passagens</h1><p>Economize até na alta temporada</p></div></div><nav><button><History size={17}/>Histórico</button><button><CalendarDays size={17}/>Calendário</button><button><Bell size={17}/>Alertas</button><button><Settings size={17}/>Integrações</button></nav></header>
-    <main>
-      <section className="hero"><div><span className="eyebrow"><Sparkles size={16}/>Busca inteligente</span><h2>Descubra rotas mais baratas sem depender de uma única companhia.</h2><p>Compare datas flexíveis, aeroportos alternativos, escalas e horários menos disputados.</p></div><div className="hero-stat"><strong>Modo demonstração</strong><span>Pronto para APIs públicas</span></div></section>
-      <SearchForm onSearch={handleSearch} loading={loading}/>
-      {lastSearch && <section className="insight"><Sparkles size={20}/><div><strong>Análise da busca</strong><p>{lastSearch.highSeason ? 'Alta temporada detectada: ampliar datas e aceitar uma escala pode reduzir bastante o preço.' : 'Período regular: compare pelo menos três dias próximos para encontrar melhores tarifas.'}</p></div></section>}
-      <section className="results"><div className="results-head"><div><h2>Melhores opções</h2><p>{offers.length ? `${offers.length} ofertas simuladas encontradas` : 'Faça uma pesquisa para visualizar as ofertas'}</p></div>{offers.length > 0 && <select><option>Ordenar por menor preço</option><option>Melhor custo-benefício</option><option>Menor duração</option></select>}</div>
-      <div className="offers">{offers.map(offer => <FlightCard key={offer.id} offer={offer} onFavorite={toggleFavorite} favorite={favorites.some(item => item.id === offer.id)}/>)}</div></section>
-    </main>
-    <footer>Caçador de Passagens · tarifas mudam rapidamente · nenhuma compra é realizada dentro do aplicativo.</footer>
-  </div>;
+      <section
+        className="grid gap-4 md:grid-cols-3"
+        aria-label="Fundação técnica"
+      >
+        {foundations.map(({ icon: Icon, title, description }) => (
+          <Card key={title}>
+            <CardHeader>
+              <div className="mb-2 grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
+                <Icon className="size-5" />
+              </div>
+              <CardTitle>{title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm leading-6 text-muted-foreground">
+                {description}
+              </p>
+            </CardContent>
+          </Card>
+        ))}
+      </section>
+    </AppShell>
+  );
 }

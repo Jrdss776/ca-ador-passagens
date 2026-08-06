@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --background: 180 20% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --primary: 173 80% 27%;
+    --primary-foreground: 0 0% 100%;
+    --muted: 174 25% 94%;
+    --muted-foreground: 215 16% 47%;
+    --border: 174 20% 87%;
+    --radius: 0.875rem;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
+    --card: 220 40% 11%;
+    --card-foreground: 210 40% 98%;
+    --primary: 172 66% 50%;
+    --primary-foreground: 174 80% 10%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 70%;
+    --border: 217 33% 22%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    min-width: 320px;
+    margin: 0;
+  }
+
+  button,
+  a {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+}
