@@ -1,6 +1,10 @@
 import { createServer } from 'node:http';
 
-import { getAmadeusConfig, searchAmadeusFlights } from './amadeus-client.mjs';
+import {
+  getAmadeusConfig,
+  searchAmadeusFlights,
+  searchAmadeusLocations,
+} from './amadeus-client.mjs';
 
 try {
   process.loadEnvFile?.('.env');
@@ -54,6 +58,28 @@ const server = createServer(async (request, response) => {
       status: 'ok',
       flightProvider: configured ? 'amadeus' : 'mock-fallback',
     });
+  }
+
+  if (request.method === 'GET' && request.url?.startsWith('/api/locations?')) {
+    const keyword = new URL(request.url, 'http://localhost').searchParams
+      .get('keyword')
+      ?.trim();
+    if (!keyword || keyword.length < 2)
+      return send(response, 200, { locations: [] });
+
+    const config = getAmadeusConfig();
+    if (!config) return send(response, 200, { locations: [] });
+
+    try {
+      const locations = await searchAmadeusLocations(keyword, config);
+      return send(response, 200, { locations });
+    } catch (error) {
+      console.error(
+        'Location search failed:',
+        error instanceof Error ? error.message : error,
+      );
+      return send(response, 200, { locations: [] });
+    }
   }
 
   if (request.method !== 'POST' || request.url !== '/api/flights/search') {

@@ -1,6 +1,6 @@
 # Caçador de Passagens
 
-Mini app para planejamento e comparação de passagens. As Sprints 1 a 8 estão concluídas: base técnica, interface responsiva, recursos pessoais, integrações públicas, direcionamento aos fornecedores e backend seguro para busca de voos. Sem credenciais Amadeus, as ofertas continuam simuladas; clima e câmbio são consultados em APIs públicas.
+Mini app para planejamento e comparação de passagens. As Sprints 1 a 9 estão concluídas: base técnica, interface responsiva, recursos pessoais, integrações públicas, direcionamento aos fornecedores, backend seguro e seleção assistida de aeroportos. Sem credenciais Amadeus, as ofertas continuam simuladas; clima e câmbio são consultados em APIs públicas.
 
 ## Tecnologias
 
@@ -100,7 +100,10 @@ Consulte também [a política de links de fornecedores](docs/supplier-links.md) 
 - backend local sem dependências adicionais e com credenciais apenas no servidor;
 - autenticação OAuth, cache temporário do token e consulta Flight Offers Search;
 - fallback automático para estimativas quando a API não estiver configurada ou disponível.
+- sugestões locais dos principais aeroportos e cidades brasileiras;
+- busca por nome ou código IATA e inversão segura entre origem e destino;
+- ampliação opcional das sugestões pela Airport & City Search do Amadeus.
 
 ## Próxima etapa
 
-O próximo ciclo poderá adicionar seleção assistida de aeroportos e ampliar a identificação de companhias. O aplicativo apenas direciona aos canais oficiais: nenhuma compra, reserva ou notificação externa foi adicionada.
+O próximo ciclo poderá validar datas e rotas com mais detalhes e ampliar a identificação de companhias. O aplicativo apenas direciona aos canais oficiais: nenhuma compra, reserva ou notificação externa foi adicionada.

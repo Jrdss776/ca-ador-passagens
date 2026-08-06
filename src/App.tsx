@@ -246,8 +246,8 @@ export default function App() {
             </h2>
             <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">
               O motor de comparação continua usando dados simulados. Clima e
-              câmbio já usam APIs públicas; dados reais de voos dependerão de
-              uma futura camada de backend segura.
+              câmbio já usam APIs públicas; o backend de voos está preparado e
+              será ativado quando as credenciais do provedor forem configuradas.
             </p>
           </div>
           <div
