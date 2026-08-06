@@ -37,6 +37,8 @@ Também existe `GET /api/locations?keyword=...`, que usa Airport & City Search p
 
 O token é mantido temporariamente em memória, as chamadas possuem timeout e as credenciais nunca são devolvidas ao navegador. Se o servidor, as credenciais ou o provedor estiverem indisponíveis, `resilientFlightProvider` usa automaticamente o provider demonstrativo.
 
+Antes da consulta, origem e destino são normalizados para IATA e validados. O backend rejeita rotas iguais, datas no passado, volta anterior à ida, formato de data inválido e quantidade de viajantes fora do limite. A classe de cabine é convertida para o padrão esperado pelo Flight Offers Search.
+
 Para ativar o ambiente de testes:
 
 1. criar uma aplicação no portal Amadeus for Developers;
