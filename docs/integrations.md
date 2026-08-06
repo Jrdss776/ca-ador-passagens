@@ -17,7 +17,7 @@ Navegador → API própria → Provider externo
 
 | Provider             | Objetivo            | Autenticação prevista      | Estado             |
 | -------------------- | ------------------- | -------------------------- | ------------------ |
-| Amadeus Self-Service | ofertas de voos     | segredo no servidor        | contrato preparado |
+| Amadeus Self-Service | ofertas de voos     | segredo no servidor        | backend preparado  |
 | OpenSky Network      | tráfego aéreo       | conta opcional no servidor | contrato preparado |
 | Open-Meteo           | previsão do tempo   | pública                    | ativa no navegador |
 | Frankfurter          | conversão de moedas | pública                    | ativa no navegador |
@@ -29,10 +29,17 @@ Navegador → API própria → Provider externo
 
 As duas consultas têm timeout e tratamento de falha independente. Se uma API estiver indisponível, a aplicação mantém as ofertas em reais e informa que o dado complementar não pôde ser carregado.
 
-## Ativação futura de dados de voo
+## Backend de dados de voo
 
-1. Criar a camada de backend e seu gerenciamento de segredos.
-2. Implementar autenticação, limites, timeout e tratamento de erros por provider.
-3. Normalizar as respostas externas para os tipos internos do aplicativo.
-4. Adicionar testes de contrato e fallback para o provider mock.
-5. Ativar Amadeus e OpenSky separadamente por configuração server-side.
+O servidor em `server/` expõe `POST /api/flights/search`, solicita um token OAuth pelo fluxo Client Credentials e consulta o Flight Offers Search. A resposta é convertida para o mesmo contrato usado pelos cartões do frontend.
+
+O token é mantido temporariamente em memória, as chamadas possuem timeout e as credenciais nunca são devolvidas ao navegador. Se o servidor, as credenciais ou o provedor estiverem indisponíveis, `resilientFlightProvider` usa automaticamente o provider demonstrativo.
+
+Para ativar o ambiente de testes:
+
+1. criar uma aplicação no portal Amadeus for Developers;
+2. preencher `AMADEUS_API_KEY` e `AMADEUS_API_SECRET` no arquivo `.env` local;
+3. iniciar `npm run dev:api` e `npm run dev` em terminais separados;
+4. pesquisar usando cidades conhecidas ou códigos IATA de três letras.
+
+Esta etapa consulta ofertas, mas não confirma preço final nem cria pedidos. A API Flight Offers Price será necessária antes de qualquer fluxo futuro de reserva.
