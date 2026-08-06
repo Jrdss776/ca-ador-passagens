@@ -1,6 +1,6 @@
 # Caçador de Passagens
 
-Mini app para planejamento e comparação de passagens. As Sprints 1 a 4 estão concluídas: base técnica, interface responsiva, motor demonstrativo e recursos pessoais locais. As ofertas são simuladas e nenhuma API externa é consultada nesta versão.
+Mini app para planejamento e comparação de passagens. As Sprints 1 a 5 estão concluídas: base técnica, interface responsiva, motor demonstrativo, recursos pessoais locais e estrutura segura para integrações. As ofertas continuam simuladas e nenhuma API externa é consultada nesta versão.
 
 ## Tecnologias
 
@@ -12,6 +12,7 @@ Mini app para planejamento e comparação de passagens. As Sprints 1 a 4 estão 
 - página inicial e formulário responsivo de pesquisa.
 - provider mock, resultados demonstrativos, filtros e ordenação.
 - favoritos, histórico, alertas e configurações persistidos localmente.
+- tela e contratos para Amadeus, OpenSky, Open-Meteo e Frankfurter.
 
 ## Requisitos
 
@@ -57,7 +58,9 @@ src/
 
 ## Variáveis de ambiente
 
-Copie `.env.example` para `.env`. Nesta sprint existe apenas `VITE_APP_NAME`, sem credenciais ou chamadas externas. Nunca envie o arquivo `.env` ao repositório.
+Copie `.env.example` para `.env`. Somente `VITE_APP_NAME` pode ser lida pelo frontend. As demais variáveis são reservadas a uma futura camada de backend e nunca devem receber o prefixo `VITE_`. Nunca envie o arquivo `.env` ao repositório.
+
+Consulte [a documentação de integrações](docs/integrations.md) para a fronteira de segurança e os passos de ativação futura.
 
 ## Escopo concluído
 
@@ -78,7 +81,10 @@ Copie `.env.example` para `.env`. Nesta sprint existe apenas `VITE_APP_NAME`, se
 - favoritos de ofertas e histórico das oito pesquisas mais recentes;
 - alertas de preço locais, com ativação, pausa e remoção;
 - configurações de aeroporto, voos diretos e densidade dos resultados.
+- catálogo visual de integrações e requisitos de autenticação;
+- contratos tipados para quatro providers externos;
+- variáveis server-side documentadas, sem segredos expostos ao Vite.
 
 ## Próxima etapa
 
-A Sprint 5 preparará a tela de integrações e a estrutura para providers externos. Nenhuma API real, conta, notificação externa, compra ou reserva foi adicionada nesta entrega.
+O próximo ciclo poderá implementar uma camada de backend e ativar os providers individualmente. Nenhuma API real, conta, notificação externa, compra ou reserva foi adicionada nesta entrega.
