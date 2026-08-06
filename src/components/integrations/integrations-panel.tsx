@@ -35,7 +35,7 @@ export function IntegrationsPanel() {
       <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
         <div className="max-w-3xl">
           <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-            Sprint 12
+            Sprint 13
           </span>
           <h2
             id="integrations-title"

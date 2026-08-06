@@ -1,12 +1,12 @@
 # Integrações externas
 
-Esta pasta documenta a fronteira de integrações atualizada na Sprint 6. A aplicação continua usando `mockFlightProvider` para ofertas de voo, enquanto Open-Meteo e Frankfurter fornecem informações públicas complementares.
+Esta pasta documenta a fronteira de integrações concluída na Sprint 13. A aplicação usa o backend Amadeus quando configurado e retorna ao `mockFlightProvider` para ofertas demonstrativas, enquanto Open-Meteo e Frankfurter fornecem informações públicas complementares.
 
 ## Regra de segurança
 
 O Vite expõe ao navegador variáveis prefixadas com `VITE_`. Por isso, `AMADEUS_API_KEY`, `AMADEUS_API_SECRET`, `OPENSKY_USERNAME` e `OPENSKY_PASSWORD` não podem receber esse prefixo nem ser importadas pelo código em `src/`.
 
-As credenciais deverão ser lidas por uma futura API própria ou função serverless. Essa camada fará autenticação com o fornecedor e devolverá ao frontend somente os dados necessários.
+As credenciais são lidas pela API própria em `server/`. Essa camada autentica com o fornecedor e devolve ao frontend somente os dados necessários.
 
 ```text
 Navegador → API própria → Provider externo
