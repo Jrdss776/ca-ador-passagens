@@ -1,66 +1,138 @@
-import { Compass, Layers3, Plane, ShieldCheck } from 'lucide-react';
+import {
+  CalendarRange,
+  MapPinned,
+  PlaneTakeoff,
+  Route,
+  Sparkles,
+  WalletCards,
+} from 'lucide-react';
 
 import { AppShell } from '@/components/layout/app-shell';
+import { FlightSearchForm } from '@/components/search/flight-search-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-const foundations = [
+const benefits = [
   {
-    icon: Layers3,
-    title: 'Base consistente',
+    icon: CalendarRange,
+    title: 'Datas flexíveis',
     description:
-      'React, Vite e TypeScript configurados para evoluir com segurança.',
+      'Compare períodos próximos para planejar uma viagem mais econômica.',
   },
   {
-    icon: Compass,
-    title: 'Interface preparada',
+    icon: MapPinned,
+    title: 'Aeroportos alternativos',
     description:
-      'Tailwind CSS e componentes shadcn/ui prontos para a próxima etapa.',
+      'Considere pontos de partida e chegada próximos ao seu destino.',
   },
   {
-    icon: ShieldCheck,
-    title: 'Qualidade desde o início',
-    description: 'Lint, formatação e validação de tipos integrados ao projeto.',
+    icon: Route,
+    title: 'Rotas inteligentes',
+    description:
+      'Prepare-se para avaliar duração, horários e número de escalas.',
   },
 ];
 
 export default function App() {
   return (
     <AppShell>
-      <section className="overflow-hidden rounded-3xl bg-gradient-to-br from-teal-700 via-teal-600 to-cyan-700 px-6 py-14 text-white shadow-xl sm:px-10 lg:px-14">
-        <div className="max-w-3xl">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-sm font-medium">
-            <Plane className="size-4" />
-            Fundação concluída
+      <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-teal-800 via-teal-700 to-cyan-800 px-6 pb-28 pt-14 text-white shadow-xl sm:px-10 lg:px-16 lg:py-20 lg:pb-32">
+        <div
+          className="absolute -right-20 -top-24 size-80 rounded-full bg-cyan-300/10 blur-3xl"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute -bottom-28 left-1/3 size-72 rounded-full bg-emerald-300/10 blur-3xl"
+          aria-hidden="true"
+        />
+        <div className="relative max-w-3xl">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-sm font-medium ring-1 ring-white/20">
+            <Sparkles className="size-4" />
+            Planejamento inteligente de viagens
           </div>
-          <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl">
-            Sua próxima viagem começa com uma base sólida.
+          <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            Encontre o melhor caminho para sua próxima viagem.
           </h1>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-teal-50">
-            O Caçador de Passagens está pronto para receber a interface de
-            pesquisa na Sprint 2.
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-teal-50 sm:text-xl">
+            Uma experiência simples para comparar possibilidades, explorar datas
+            e tomar decisões com mais confiança.
           </p>
         </div>
       </section>
 
+      <FlightSearchForm />
+
       <section
-        className="grid gap-4 md:grid-cols-3"
-        aria-label="Fundação técnica"
+        id="recursos"
+        className="scroll-mt-24 py-8"
+        aria-labelledby="benefits-title"
       >
-        {foundations.map(({ icon: Icon, title, description }) => (
-          <Card key={title}>
-            <CardHeader>
-              <div className="mb-2 grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
-                <Icon className="size-5" />
-              </div>
-              <CardTitle>{title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm leading-6 text-muted-foreground">
-                {description}
-              </p>
-            </CardContent>
-          </Card>
-        ))}
+        <div className="mx-auto mb-9 max-w-2xl text-center">
+          <span className="text-sm font-semibold uppercase tracking-widest text-primary">
+            Mais possibilidades
+          </span>
+          <h2
+            id="benefits-title"
+            className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl"
+          >
+            Planeje além do preço
+          </h2>
+          <p className="mt-4 leading-7 text-muted-foreground">
+            A interface foi preparada para transformar diferentes critérios em
+            uma comparação clara nas próximas sprints.
+          </p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {benefits.map(({ icon: Icon, title, description }) => (
+            <Card
+              key={title}
+              className="transition-transform duration-200 hover:-translate-y-1"
+            >
+              <CardHeader>
+                <div className="mb-2 grid size-11 place-items-center rounded-xl bg-primary/10 text-primary">
+                  <Icon className="size-5" />
+                </div>
+                <CardTitle>{title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm leading-6 text-muted-foreground">
+                  {description}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section
+        id="sobre"
+        className="scroll-mt-24 rounded-3xl border bg-card px-6 py-10 sm:px-10"
+        aria-labelledby="about-title"
+      >
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
+          <div>
+            <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
+              <PlaneTakeoff className="size-4" />
+              Construído por etapas
+            </span>
+            <h2
+              id="about-title"
+              className="mt-3 text-2xl font-bold sm:text-3xl"
+            >
+              Uma interface pronta para evoluir
+            </h2>
+            <p className="mt-4 max-w-3xl leading-7 text-muted-foreground">
+              Esta sprint entrega somente a experiência visual de pesquisa. O
+              motor de comparação e os resultados simulados serão implementados
+              na Sprint 3.
+            </p>
+          </div>
+          <div
+            className="grid size-20 place-items-center rounded-2xl bg-primary/10 text-primary"
+            aria-hidden="true"
+          >
+            <WalletCards className="size-9" />
+          </div>
+        </div>
       </section>
     </AppShell>
   );

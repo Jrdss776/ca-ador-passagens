@@ -1,6 +1,6 @@
 # Caçador de Passagens
 
-Fundação do mini app para planejamento e comparação de passagens. Esta entrega corresponde exclusivamente à **Sprint 1**: infraestrutura, padrões visuais e componentes base. Busca, dados simulados e integrações com APIs ainda não fazem parte desta versão.
+Mini app para planejamento e comparação de passagens. A base técnica da Sprint 1 e a interface da **Sprint 2** estão concluídas. O formulário ainda não consulta ofertas: dados simulados, motor de busca e integrações não fazem parte desta versão.
 
 ## Tecnologias
 
@@ -9,6 +9,7 @@ Fundação do mini app para planejamento e comparação de passagens. Esta entre
 - shadcn/ui, com aliases e componentes base configurados;
 - ESLint e Prettier;
 - tema claro/escuro com preferência persistida.
+- página inicial e formulário responsivo de pesquisa.
 
 ## Requisitos
 
@@ -56,7 +57,7 @@ src/
 
 Copie `.env.example` para `.env`. Nesta sprint existe apenas `VITE_APP_NAME`, sem credenciais ou chamadas externas. Nunca envie o arquivo `.env` ao repositório.
 
-## Escopo da Sprint 1
+## Escopo concluído
 
 - base React + Vite + TypeScript;
 - Tailwind e configuração shadcn/ui;
@@ -65,7 +66,10 @@ Copie `.env.example` para `.env`. Nesta sprint existe apenas `VITE_APP_NAME`, se
 - ambiente documentado;
 - componentes `Button` e `Card`;
 - tema claro/escuro e layout responsivo principal.
+- página inicial com navegação desktop e móvel;
+- formulário visual de origem, destino, datas e preferências;
+- seções informativas responsivas.
 
 ## Próxima etapa
 
-A Sprint 2 implementará a interface de pesquisa, navegação e refinamentos responsivos. Nenhuma API ou busca real foi adicionada nesta entrega.
+A Sprint 3 implementará o contrato `FlightProvider`, um provider mock, resultados simulados, filtros e ordenação. Nenhuma API ou busca real foi adicionada nesta entrega.
