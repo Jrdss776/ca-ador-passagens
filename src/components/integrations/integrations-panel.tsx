@@ -35,21 +35,21 @@ export function IntegrationsPanel() {
       <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
         <div className="max-w-3xl">
           <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-            Sprint 5
+            Sprint 6
           </span>
           <h2
             id="integrations-title"
             className="mt-2 text-3xl font-bold tracking-tight"
           >
-            Integrações preparadas com segurança
+            Integrações públicas em funcionamento
           </h2>
           <p className="mt-3 leading-7 text-muted-foreground">
-            Os contratos estão prontos para uma futura camada de backend.
-            Nenhuma conexão externa está ativa nesta entrega.
+            Open-Meteo e Frankfurter enriquecem os resultados sem exigir
+            cadastro ou credenciais. As integrações de voo continuam isoladas.
           </p>
         </div>
         <div className="inline-flex w-fit items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-sm font-medium text-muted-foreground">
-          <ServerCog className="size-4" /> 4 providers estruturados
+          <ServerCog className="size-4" /> 2 ativos · 2 preparados
         </div>
       </div>
 
@@ -65,8 +65,8 @@ export function IntegrationsPanel() {
             <p className="mt-1 text-sm leading-6 text-muted-foreground">
               Variáveis sem o prefixo{' '}
               <code className="rounded bg-muted px-1 py-0.5">VITE_</code>{' '}
-              permanecem reservadas ao futuro backend. O provider mock continua
-              sendo a fonte ativa.
+              permanecem reservadas ao futuro backend. As ofertas de voo
+              continuam vindo do provider demonstrativo.
             </p>
           </div>
         </div>
@@ -82,8 +82,14 @@ export function IntegrationsPanel() {
                   <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-primary">
                     <Icon className="size-5" />
                   </span>
-                  <span className="rounded-full bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-700 dark:text-amber-300">
-                    Estrutura pronta
+                  <span
+                    className={
+                      integration.active
+                        ? 'rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300'
+                        : 'rounded-full bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-700 dark:text-amber-300'
+                    }
+                  >
+                    {integration.active ? 'Ativa' : 'Estrutura pronta'}
                   </span>
                 </div>
                 <div>

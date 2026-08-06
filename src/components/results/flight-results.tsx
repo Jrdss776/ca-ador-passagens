@@ -1,6 +1,7 @@
 import { Filter, ListFilter } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
+import { PublicApiInsights } from '@/components/integrations/public-api-insights';
 import { FlightOfferCard } from '@/components/results/flight-offer-card';
 import { Label } from '@/components/ui/label';
 import type {
@@ -40,6 +41,7 @@ export function FlightResults({
     () => [...new Set(offers.map((offer) => offer.airline))],
     [offers],
   );
+  const lowestPrice = Math.min(...offers.map((offer) => offer.price));
 
   const visibleOffers = useMemo(() => {
     const filtered = offers.filter((offer) => {
@@ -148,6 +150,13 @@ export function FlightResults({
           </div>
         </div>
       </div>
+
+      {Number.isFinite(lowestPrice) && (
+        <PublicApiInsights
+          destination={search.destination}
+          lowestPrice={lowestPrice}
+        />
+      )}
 
       <div className="grid gap-3">
         {visibleOffers.map((offer) => (
