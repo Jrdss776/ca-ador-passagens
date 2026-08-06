@@ -33,6 +33,8 @@ As duas consultas têm timeout e tratamento de falha independente. Se uma API es
 
 O servidor em `server/` expõe `POST /api/flights/search`, solicita um token OAuth pelo fluxo Client Credentials e consulta o Flight Offers Search. A resposta é convertida para o mesmo contrato usado pelos cartões do frontend.
 
+Também existe `GET /api/locations?keyword=...`, que usa Airport & City Search para ampliar as sugestões locais. Sem credenciais ou em caso de falha, retorna uma lista vazia e o frontend mantém o catálogo brasileiro embarcado.
+
 O token é mantido temporariamente em memória, as chamadas possuem timeout e as credenciais nunca são devolvidas ao navegador. Se o servidor, as credenciais ou o provedor estiverem indisponíveis, `resilientFlightProvider` usa automaticamente o provider demonstrativo.
 
 Para ativar o ambiente de testes:
