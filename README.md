@@ -1,6 +1,6 @@
 # Caçador de Passagens
 
-Mini app para planejamento e comparação de passagens. As Sprints 1 a 11 estão concluídas: base técnica, interface responsiva, recursos pessoais, integrações públicas, fornecedores, backend seguro, aeroportos assistidos, validação da pesquisa e detalhes de tarifa e bagagem. Sem credenciais Amadeus, as ofertas continuam simuladas; clima e câmbio são consultados em APIs públicas.
+Mini app para planejamento e comparação de passagens. As Sprints 1 a 12 estão concluídas: base técnica, interface responsiva, recursos pessoais, integrações públicas, fornecedores, backend seguro, aeroportos assistidos, validação, detalhes de tarifa e uma camada inicial de qualidade automatizada. Sem credenciais Amadeus, as ofertas continuam simuladas; clima e câmbio são consultados em APIs públicas.
 
 ## Tecnologias
 
@@ -39,6 +39,7 @@ Para testar a ponte de voos em outro terminal, execute `npm run dev:api`. Sem `A
 | `npm run dev`          | inicia o ambiente local                     |
 | `npm run dev:api`      | inicia o backend de voos em desenvolvimento |
 | `npm run start:api`    | inicia o backend de voos sem observação     |
+| `npm test`             | executa os testes automatizados             |
 | `npm run build`        | valida tipos e gera a versão de produção    |
 | `npm run preview`      | abre localmente o build gerado              |
 | `npm run lint`         | executa as regras de qualidade              |
@@ -109,7 +110,10 @@ Consulte também [a política de links de fornecedores](docs/supplier-links.md) 
 - resumo visual da tarifa, cabine, classe de reserva e bagagens em cada oferta;
 - leitura das franquias informadas pelo Amadeus, sem presumir dados ausentes;
 - identificação explícita das regras simuladas e recomendação de confirmação no canal oficial.
+- testes automatizados para resolução de aeroportos e regras críticas da pesquisa;
+- aviso acessível quando a busca utiliza estimativas por indisponibilidade do provedor;
+- estado de erro seguro, indicador de carregamento e anúncios para leitores de tela.
 
 ## Próxima etapa
 
-O próximo ciclo será dedicado a testes automatizados, estados de erro e refinamentos de acessibilidade. O aplicativo apenas direciona aos canais oficiais: nenhuma compra, reserva ou notificação externa foi adicionada.
+O próximo ciclo será dedicado à preparação de produção, segurança operacional e publicação. O aplicativo apenas direciona aos canais oficiais: nenhuma compra, reserva ou notificação externa foi adicionada.
