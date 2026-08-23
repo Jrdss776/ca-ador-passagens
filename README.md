@@ -27,3 +27,11 @@ Os resultados continuam explicitamente simulados. Nenhuma compra, login ou pagam
 - feriados nacionais via Nager.Date;
 - nenhuma chave de API necessária;
 - falhas desses serviços não interrompem a pesquisa de tarifas.
+
+## Sprint 3 — aeroportos e rotas
+
+- autocomplete por cidade, nome, IATA ou ICAO;
+- principais aeroportos brasileiros com dados derivados do OurAirports;
+- aeroportos alternativos em um raio de até 250 km;
+- pesquisa de ida ou ida e volta;
+- tarifas demonstrativas ajustadas ao tipo de viagem.
