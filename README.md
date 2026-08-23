@@ -20,3 +20,10 @@ npm run dev
 - favoritos persistidos no LocalStorage.
 
 Os resultados continuam explicitamente simulados. Nenhuma compra, login ou pagamento é realizado no aplicativo.
+
+## Dados públicos do destino
+
+- localização e previsão do tempo via Open-Meteo;
+- feriados nacionais via Nager.Date;
+- nenhuma chave de API necessária;
+- falhas desses serviços não interrompem a pesquisa de tarifas.
