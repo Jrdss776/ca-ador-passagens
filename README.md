@@ -35,3 +35,9 @@ Os resultados continuam explicitamente simulados. Nenhuma compra, login ou pagam
 - aeroportos alternativos em um raio de até 250 km;
 - pesquisa de ida ou ida e volta;
 - tarifas demonstrativas ajustadas ao tipo de viagem.
+
+## Sprint 4 — qualidade e publicação
+
+- testes automáticos do catálogo, aeroportos próximos e tarifas demonstrativas;
+- CI executa testes e build em cada alteração;
+- publicação gratuita preparada para GitHub Pages.
