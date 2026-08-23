@@ -41,3 +41,9 @@ Os resultados continuam explicitamente simulados. Nenhuma compra, login ou pagam
 - testes automáticos do catálogo, aeroportos próximos e tarifas demonstrativas;
 - CI executa testes e build em cada alteração;
 - publicação gratuita preparada para GitHub Pages.
+
+## Aplicativo
+
+A publicação automática está disponível em:
+
+https://jrdss776.github.io/ca-ador-passagens/
