@@ -1,6 +1,6 @@
 # Caçador de Passagens
 
-Mini app React + TypeScript para busca inteligente de passagens, com modo demonstração e estrutura preparada para APIs públicas.
+Mini app React + TypeScript para pesquisa de passagens, com modo demonstração e arquitetura preparada para APIs públicas.
 
 ## Executar
 
@@ -9,22 +9,21 @@ npm install
 npm run dev
 ```
 
-Abra o endereço exibido pelo Vite.
+## Sprint 2
 
-## O que já funciona
+- pesquisa responsiva e validação básica;
+- navegação funcional entre Busca, Histórico, Datas flexíveis e Favoritos;
+- histórico das 20 pesquisas mais recentes no dispositivo;
+- repetição de uma pesquisa anterior;
+- comparação visual de sete datas próximas;
+- ordenação por preço, custo-benefício e duração;
+- favoritos persistidos no LocalStorage.
 
-- formulário de pesquisa;
-- modo Alta Temporada;
-- resultados simulados;
-- pontuação de custo-benefício;
-- favoritos no LocalStorage;
-- layout responsivo;
-- arquitetura `FlightProvider`.
+Os resultados continuam explicitamente simulados. Nenhuma compra, login ou pagamento é realizado no aplicativo.
 
-## Próximo passo técnico
+## Dados públicos do destino
 
-Criar um backend ou função serverless para conectar Amadeus Self-Service sem expor chaves no navegador. Open-Meteo, Frankfurter e APIs de feriados podem ser integradas diretamente quando não exigirem segredo.
-
-## Aviso
-
-Os preços exibidos nesta versão são simulados e identificados como demonstração.
+- localização e previsão do tempo via Open-Meteo;
+- feriados nacionais via Nager.Date;
+- nenhuma chave de API necessária;
+- falhas desses serviços não interrompem a pesquisa de tarifas.
